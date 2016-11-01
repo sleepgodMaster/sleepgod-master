@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ColorfulProgressBar">
+        <attr name="reachedColor" format="color"/>
+        <attr name="unReachedColor" format="color"/>
+        <attr name="reachedHight" format="dimension"/>
+        <attr name="unReachedHight" format="dimension"/>
+        <attr name="progressTextOffset" format="dimension"/>
+        <attr name="progressTextSize" format="dimension"/>
+    </declare-styleable>
+</resources>
