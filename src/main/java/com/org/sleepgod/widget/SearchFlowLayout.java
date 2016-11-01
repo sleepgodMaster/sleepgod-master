@@ -13,6 +13,30 @@ import java.util.List;
  * Created by cool on 2016/10/26 0026.
  */
 
+/**
+ * 使用demo
+ * private String[] mNames = new String[]{"大主宰","龙王传说","一念永恒","雪鹰领主","帝霸","最强狂兵","美食供应商","我是大明星","全职法师","我的贴身校花","重生完美时代"
+ * ,"318女生宿舍"};
+ *
+ * mFlowLayout = (FlowLayout) findViewById(R.id.fl_view);
+ * for (int i = 0; i < mNames.length; i++) {
+ * TextView textView = new TextView(this);
+ * textView.setText(mNames[i]);
+ * textView.setTextSize(sp2px(10));
+ * textView.setBackgroundResource(R.drawable.text_bg);
+ * GradientDrawable gradientDrawable = (GradientDrawable) textView.getBackground();
+ * gradientDrawable.setStroke(1, UIUtils.randomColor());
+ * mFlowLayout.addView(textView);
+ * }
+ *
+ * mlowLayout.setOnItemClickListener(new FlowLayout.OnItemClickListener() {
+ *
+ * @Override public void click(int position) {
+ * Toast.makeText(FlowLayoutActivity.this,mNames[position],Toast.LENGTH_SHORT).show();
+ * }
+ * });
+ */
+
 public class SearchFlowLayout extends ViewGroup {
     List<Line> lines = new ArrayList<Line>();//所有的行
     private Line currentLine;
@@ -31,11 +55,11 @@ public class SearchFlowLayout extends ViewGroup {
 
     private OnItemClickListener mListener;
 
-    public void setOnItemClickListener(OnItemClickListener listener){
+    public void setOnItemClickListener(OnItemClickListener listener) {
         this.mListener = listener;
     }
 
-    public interface OnItemClickListener{
+    public interface OnItemClickListener {
         void click(int position);
     }
 
@@ -45,10 +69,10 @@ public class SearchFlowLayout extends ViewGroup {
         currentLine = null;
         int width = MeasureSpec.getSize(widthMeasureSpec);
         float maxWidth = width - getPaddingLeft() - getPaddingRight();
-        float horizontalDistance = dp2px(getContext(),10);
-        float vercitalDistance = dp2px(getContext(),10);
+        float horizontalDistance = dp2px(getContext(), 10);
+        float vercitalDistance = dp2px(getContext(), 10);
         int childCount = getChildCount();
-        currentLine = new Line(maxWidth, horizontalDistance,vercitalDistance);
+        currentLine = new Line(maxWidth, horizontalDistance, vercitalDistance);
         lines.add(currentLine);
         for (int i = 0; i < childCount; i++) {
             View childView = getChildAt(i);
@@ -56,17 +80,17 @@ public class SearchFlowLayout extends ViewGroup {
             childView.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(mListener != null){
+                    if (mListener != null) {
                         mListener.click(position);
                     }
                 }
             });
-            measureChild(childView,widthMeasureSpec,heightMeasureSpec);
+            measureChild(childView, widthMeasureSpec, heightMeasureSpec);
             if (currentLine.canAddView(childView)) {
                 currentLine.addView(childView);
             } else {
-                currentLine = new Line(maxWidth, horizontalDistance,vercitalDistance);
-                if(currentLine.canAddView(childView)) {
+                currentLine = new Line(maxWidth, horizontalDistance, vercitalDistance);
+                if (currentLine.canAddView(childView)) {
                     currentLine.addView(childView);
                 }
                 lines.add(currentLine);
@@ -80,7 +104,7 @@ public class SearchFlowLayout extends ViewGroup {
             } else if (i == lines.size() - 1) {
                 hight += getPaddingBottom();
             }
-            hight += lines.get(i).mLineHight;
+            hight += lines.get(i).mLineHight + vercitalDistance;
         }
 
         setMeasuredDimension(width, hight);
@@ -107,7 +131,7 @@ public class SearchFlowLayout extends ViewGroup {
         public float mUseWidth;//行中已经使用的宽度
         public float mLineHight;//行的高度
 
-        public Line(float maxWidth, float horizontalDistance,float vercitalDistance) {
+        public Line(float maxWidth, float horizontalDistance, float vercitalDistance) {
             this.mMaxWidth = maxWidth;
             this.mHorizontalDistance = horizontalDistance;
             this.mVercitalDistance = vercitalDistance;
@@ -124,7 +148,7 @@ public class SearchFlowLayout extends ViewGroup {
             if (mViews.size() == 0) {
                 mUseWidth += getPaddingLeft() + getPaddingRight() + view.getMeasuredWidth();
                 return true;
-            }else {
+            } else {
                 mUseWidth += view.getMeasuredWidth() + mHorizontalDistance;
             }
             if (mUseWidth <= mMaxWidth) {
@@ -163,6 +187,7 @@ public class SearchFlowLayout extends ViewGroup {
             }
         }
     }
+
     /**
      * dp转px
      *
