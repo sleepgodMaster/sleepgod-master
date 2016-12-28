@@ -1,4 +1,4 @@
-package com.sleepgod.hand_alarm_libarary;
+package com.org.sleepgod.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;

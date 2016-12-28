@@ -11,30 +11,7 @@ import java.util.List;
 /**
  * 流式布局
  * Created by cool on 2016/10/26 0026.
- */
-
-/**
- * 使用demo
- * private String[] mNames = new String[]{"大主宰","龙王传说","一念永恒","雪鹰领主","帝霸","最强狂兵","美食供应商","我是大明星","全职法师","我的贴身校花","重生完美时代"
- * ,"318女生宿舍"};
- *
- * mFlowLayout = (FlowLayout) findViewById(R.id.fl_view);
- * for (int i = 0; i < mNames.length; i++) {
- * TextView textView = new TextView(this);
- * textView.setText(mNames[i]);
- * textView.setTextSize(sp2px(10));
- * textView.setBackgroundResource(R.drawable.text_bg);
- * GradientDrawable gradientDrawable = (GradientDrawable) textView.getBackground();
- * gradientDrawable.setStroke(1, UIUtils.randomColor());
- * mFlowLayout.addView(textView);
- * }
- *
- * mlowLayout.setOnItemClickListener(new FlowLayout.OnItemClickListener() {
- *
- * @Override public void click(int position) {
- * Toast.makeText(FlowLayoutActivity.this,mNames[position],Toast.LENGTH_SHORT).show();
- * }
- * });
+ * 使用说明：http://blog.csdn.net/cool_fuwei/article/details/52997644
  */
 
 public class SearchFlowLayout extends ViewGroup {

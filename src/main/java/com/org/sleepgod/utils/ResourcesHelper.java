@@ -1,4 +1,4 @@
-package com.sleepgod.mynfctest;
+package com.org.sleepgod.utils;
 
 import android.content.Context;
 import android.content.res.Resources;
