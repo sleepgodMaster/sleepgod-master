@@ -1,4 +1,4 @@
-package com.cool.sleepgod.net;
+package com.sleepgod.net;
 
 import org.junit.Test;
 
