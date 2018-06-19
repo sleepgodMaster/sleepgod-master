@@ -1,11 +1,17 @@
 package com.sleepgod.sleepgod.Activity;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.sleepgod.ok.http.IDownloadCallback;
 import com.sleepgod.ok.http.IResponseCallback;
 import com.sleepgod.sleepgod.HttpApi;
 import com.sleepgod.sleepgod.R;
@@ -13,7 +19,10 @@ import com.sleepgod.sleepgod.R;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -42,6 +51,27 @@ public class OkHttpTestActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_okhttp_test);
         ButterKnife.bind(this);
+
+        if (checkPermission( Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.READ_PHONE_STATE)) {
+
+        } else {
+            requestPermission(3000,Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.READ_PHONE_STATE, Manifest.permission.CALL_PHONE);
+        }
+
+    }
+
+    public boolean checkPermission(String... permissions) {
+        for (String permission : permissions) {
+            if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
+                return false;
+            }
+        }
+        return true;
+    }
+    public void requestPermission(int requestCode, String... permissions) {
+        ActivityCompat.requestPermissions(this, permissions, requestCode);
     }
 
     @OnClick({R.id.post_tv, R.id.get_tv, R.id.download_tv, R.id.upload_tv})
@@ -64,9 +94,69 @@ public class OkHttpTestActivity extends FragmentActivity {
 
     private void doUpload() {
 
+        HashMap<String, Object> params = new HashMap<>();
+
+        params.put("customerId","198");
+        params.put("token","");
+        params.put("complainMessage","墙掉色");
+        params.put("houseId","459");
+
+        List<File> files = new ArrayList<>();
+        files.add(new File("/storage/emulated/0/CHINARES_APP/20180619_0253411.jpg"));
+        HttpApi.uploadFile("", files, params, new IResponseCallback() {
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onFinish(String response) {
+                resultTv.setText(response);
+            }
+
+            @Override
+            public void onError(Exception e) {
+                resultTv.setText(e.getMessage());
+            }
+        });
     }
 
     private void doDownload() {
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                HttpApi.download("http://zd-flat-test-oss.oss-cn-shenzhen.aliyuncs.com/file_1529134019870.jpg", "/storage/emulated/0/CHINARES_APP/file_1529134019870.jpg", null, new IDownloadCallback() {
+                    @Override
+                    public void onStart() {
+
+                    }
+
+                    @Override
+                    public void onProgress(long contentLength, int readLength, byte[] bytes) {
+                        float progress =  readLength * 1.0f / contentLength;
+                        final int precent = (int) (progress * 100);
+                        Log.e("RunOnUiThread", "onProgress: "+precent);
+                        OkHttpTestActivity.this.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                resultTv.setText(precent+"%");
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onFinish() {
+
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+                        resultTv.setText(e.getMessage());
+                    }
+                });
+            }
+        }).start();
 
     }
 
@@ -102,7 +192,7 @@ public class OkHttpTestActivity extends FragmentActivity {
             e.printStackTrace();
         }
 
-        HttpApi.post("http://rentopsdev.crland.com.cn/crlandrentoperate/api/public/app/house/query", params, new IResponseCallback() {
+        HttpApi.post("", params, new IResponseCallback() {
             @Override
             public void onStart() {
 

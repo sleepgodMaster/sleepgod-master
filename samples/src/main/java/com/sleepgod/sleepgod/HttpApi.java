@@ -3,13 +3,16 @@ package com.sleepgod.sleepgod;
 import android.content.Context;
 import android.text.TextUtils;
 
+import com.sleepgod.ok.http.IDownloadCallback;
 import com.sleepgod.ok.http.IResponseCallback;
 import com.sleepgod.ok.http.OkHttpCaller;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -86,6 +89,11 @@ public class HttpApi {
         okHttpCaller.get(url, getHeaderBuilder().build(), params,callback);
     }
 
+    public static void uploadFile(String url, List<File> files, HashMap<String, Object> params, IResponseCallback callback) {
+        okHttpCaller.uploadFile(url,files , params,callback);
+    }
 
-
+    public static void download(String url, String filePath, HashMap<String, Object> params, IDownloadCallback callback) {
+        okHttpCaller.download(url,filePath , getHeaderBuilder().build(),params,callback);
+    }
 }
