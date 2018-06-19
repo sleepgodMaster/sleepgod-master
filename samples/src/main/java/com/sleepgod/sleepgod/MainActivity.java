@@ -7,18 +7,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.sleepgod.sleepgod.Activity.OkHttpTestActivity;
+import com.sleepgod.sleepgod.activity.OkHttpTestActivity;
+import com.sleepgod.sleepgod.activity.RetrofitTestActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity {
-
-    @BindView(R.id.center_tv)
-    TextView centerTv;
-    @BindView(R.id.go_okhttp_bt)
-    Button goOkhttpBt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,11 +23,13 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
     }
 
-    @OnClick({R.id.center_tv, R.id.go_okhttp_bt})
+    @OnClick({R.id.bt_retrofit, R.id.go_okhttp_bt})
     public void onClick(View view) {
         Intent intent = new Intent();
         switch (view.getId()) {
-            case R.id.center_tv:
+            case R.id.bt_retrofit:
+                intent.setClass(this, RetrofitTestActivity.class);
+                startActivity(intent);
                 break;
             case R.id.go_okhttp_bt:
                 intent.setClass(this,OkHttpTestActivity.class);

@@ -31,6 +31,6 @@ dependencies {
     implementation project(':sleepgod-net')
     implementation project(':sleepgod-ok')
 
-    api 'com.jakewharton:butterknife:8.5.1'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
+    implementation rootProject.ext.dependencies.butterknife
+    annotationProcessor rootProject.ext.dependencies.butterknifeCompiler
 }

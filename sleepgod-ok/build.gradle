@@ -29,5 +29,5 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
     implementation rootProject.ext.dependencies.okhttp3
-    api 'com.google.code.gson:gson:2.8.0'
+    implementation rootProject.ext.dependencies.gson
 }

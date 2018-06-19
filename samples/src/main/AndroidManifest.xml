@@ -26,7 +26,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".Activity.OkHttpTestActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".activity.OkHttpTestActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".activity.RetrofitTestActivity" android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

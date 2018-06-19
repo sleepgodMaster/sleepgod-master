@@ -11,14 +11,17 @@ ext{
     ]
 
     libsVersion = [
-            supportLibraryVersion = "27.1.1",
+            supportLibraryVersion = "27.0.1",
             constraint_layout = "1.0.2",
             retrofit = "2.4.0",
             retrofit_converter_gson = "2.4.0",
             retrofit_adapter_rxjava2 = "2.4.0",
+            converter_scalars = "2.4.0",
             rxandroid = "2.0.2",
             rxjava = "2.1.14",
-            okhttp3 = "3.10.0"
+            okhttp3 = "3.10.0",
+            gson = "2.8.0",
+            butterknife = "8.5.1"
     ]
 
     dependencies = [
@@ -27,8 +30,12 @@ ext{
             retrofit                  : "com.squareup.retrofit2:retrofit:$rootProject.retrofit",
             retrofit_converter_gson   : "com.squareup.retrofit2:converter-gson:$rootProject.retrofit_converter_gson",
             retrofit_adapter_rxjava2  : "com.squareup.retrofit2:adapter-rxjava2:$rootProject.retrofit_adapter_rxjava2",
+            converter_scalars         : "com.squareup.retrofit2:converter-scalars:$rootProject.converter_scalars",
             rxandroid                 : "io.reactivex.rxjava2:rxandroid:$rootProject.rxandroid",
             rxjava                    : "io.reactivex.rxjava2:rxjava:$rootProject.rxjava",
-            okhttp3                   : "com.squareup.okhttp3:okhttp:$rootProject.okhttp3"
+            okhttp3                   : "com.squareup.okhttp3:okhttp:$rootProject.okhttp3",
+            gson                      : "com.google.code.gson:gson:$rootProject.gson",
+            butterknife               : "com.jakewharton:butterknife:$rootProject.butterknife",
+            butterknifeCompiler       : "com.jakewharton:butterknife-compiler:$rootProject.butterknife"
     ]
 }

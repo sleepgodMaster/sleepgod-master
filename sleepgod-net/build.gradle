@@ -34,4 +34,5 @@ dependencies {
     api rootProject.ext.dependencies.retrofit
     api rootProject.ext.dependencies.retrofit_converter_gson
     api rootProject.ext.dependencies.retrofit_adapter_rxjava2
+    api rootProject.ext.dependencies.converter_scalars
 }

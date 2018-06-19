@@ -1,4 +1,4 @@
-package com.sleepgod.sleepgod.Activity;
+package com.sleepgod.sleepgod.activity;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -33,7 +34,7 @@ import butterknife.OnClick;
  * Created by cuiweicai on 2018/6/14.
  */
 
-public class OkHttpTestActivity extends FragmentActivity {
+public class OkHttpTestActivity extends AppCompatActivity {
 
     @BindView(R.id.post_tv)
     TextView postTv;
