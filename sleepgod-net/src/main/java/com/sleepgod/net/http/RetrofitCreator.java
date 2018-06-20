@@ -1,4 +1,4 @@
-package com.sleepgod.net;
+package com.sleepgod.net.http;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -7,6 +7,10 @@ import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
+
+/**
+ * Created by cool on 2018/6/20.
+ */
 
 public class RetrofitCreator {
     private static volatile RetrofitCreator instance;

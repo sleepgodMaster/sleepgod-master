@@ -5,6 +5,10 @@ import android.os.Bundle;
 import com.sleepgod.net.base.presenter.BasePresenter;
 import com.sleepgod.net.base.view.BaseView;
 
+/**
+ * Created by cool on 2018/6/20.
+ */
+
 public abstract class MVPActivity<V extends BaseView,P extends BasePresenter<V>> extends BaseActivity {
 
     public P mPresenter;

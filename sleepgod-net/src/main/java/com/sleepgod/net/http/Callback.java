@@ -2,7 +2,6 @@ package com.sleepgod.net.http;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
-import com.sleepgod.net.HttpClient;
 import com.sleepgod.net.base.presenter.BasePresenter;
 
 import java.io.IOException;
@@ -19,20 +18,24 @@ import okhttp3.ResponseBody;
 import retrofit2.HttpException;
 
 /**
- * 回调类
+ * Created by cool on 2018/6/20.
  */
-public abstract class Callback<ResultType> {
-    private boolean showLoddingDialog;
-    private String title;
-    private WeakReference<BasePresenter> presenterWReference;
 
-    public void init(WeakReference<BasePresenter> presenterWReference, boolean showLoddingDialog, String title) {
-        this.presenterWReference = presenterWReference;
-        this.showLoddingDialog = showLoddingDialog;
-        this.title = title;
+public abstract class Callback<ResultType> {
+    private boolean mShowLodding;
+    private String mTitle;
+    private WeakReference<BasePresenter> mPresenterWReference;
+
+    public void init(WeakReference<BasePresenter> presenterWReference, boolean showLodding, String title) {
+        this.mPresenterWReference = presenterWReference;
+        this.mShowLodding = showLodding;
+        this.mTitle = title;
     }
 
     public void onSubscribe(Disposable d) {
+        if(mPresenterWReference != null && mPresenterWReference.get() != null){
+            mPresenterWReference.get().addDisposable(d);
+        }
         onStart();
     }
 
@@ -45,14 +48,14 @@ public abstract class Callback<ResultType> {
     }
 
     private void onStart() {
-        if (showLoddingDialog && presenterWReference != null && presenterWReference.get() != null) {
-            presenterWReference.get().mView.showLodingDialog(title);
+        if (mShowLodding && mPresenterWReference != null && mPresenterWReference.get() != null) {
+            mPresenterWReference.get().mView.showLodingDialog(mTitle);
         }
     }
 
     public void onComplete() {
-        if (showLoddingDialog && presenterWReference != null && presenterWReference.get() != null) {
-            presenterWReference.get().mView.hideLodingDialog();
+        if (mShowLodding && mPresenterWReference != null && mPresenterWReference.get() != null) {
+            mPresenterWReference.get().mView.hideLodingDialog();
         }
     }
 

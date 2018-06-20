@@ -1,17 +1,18 @@
-package com.sleepgod.net;
+package com.sleepgod.net.http;
 
 import com.sleepgod.net.base.presenter.BasePresenter;
-import com.sleepgod.net.http.Callback;
-import com.sleepgod.net.http.HttpMethod;
-import com.sleepgod.net.http.Request;
 
 import java.io.File;
 import java.lang.ref.WeakReference;
 import java.util.HashMap;
 
+/**
+ * Created by cool on 2018/6/20.
+ */
+
 public class HttpClient {
     private WeakReference<BasePresenter> presenterWReference;
-    private boolean showLoddingDialog;
+    private boolean showLodding;
     private String title;
     private HttpMethod httpMethod;
     private HashMap<String, Object> params;
@@ -21,7 +22,7 @@ public class HttpClient {
 
     private HttpClient(Builder builder) {
         this.presenterWReference = builder.presenterWReference;
-        this.showLoddingDialog = builder.showLoddingDialog;
+        this.showLodding = builder.showLodding;
         this.title = builder.title;
         this.httpMethod = builder.httpMethod;
         this.params = builder.params;
@@ -30,8 +31,8 @@ public class HttpClient {
         this.uploadFile = builder.uploadFile;
     }
 
-    public <T> void callback(Callback<T> callback){
-        callback.init(presenterWReference,showLoddingDialog,title);
+    public <T> void execute(Callback<T> callback){
+        callback.init(presenterWReference, showLodding,title);
         Request.newRequest(httpMethod,params,url,baseUrl,uploadFile,callback);
     }
 
@@ -42,7 +43,7 @@ public class HttpClient {
 
     public static class Builder {
         private WeakReference<BasePresenter> presenterWReference;
-        private boolean showLoddingDialog;
+        private boolean showLodding;
         private String title;
         private HttpMethod httpMethod = HttpMethod.GET;
         private HashMap<String, Object> params;
@@ -54,8 +55,8 @@ public class HttpClient {
             presenterWReference = new WeakReference<>(basePresenter);
         }
 
-        public Builder showLoddingDialog(boolean showLoddingDialog) {
-            this.showLoddingDialog = showLoddingDialog;
+        public Builder showLodding(boolean showLodding) {
+            this.showLodding = showLodding;
             return this;
         }
 

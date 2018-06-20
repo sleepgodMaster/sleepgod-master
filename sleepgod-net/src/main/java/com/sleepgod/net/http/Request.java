@@ -2,9 +2,6 @@ package com.sleepgod.net.http;
 
 import android.text.TextUtils;
 
-import com.sleepgod.net.ApiService;
-import com.sleepgod.net.RetrofitCreator;
-
 import java.io.File;
 import java.util.HashMap;
 
@@ -12,20 +9,19 @@ import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.ObservableTransformer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.MultipartBody;
 import okhttp3.ResponseBody;
-
+/**
+ * Created by cool on 2018/6/20.
+ */
 public class Request {
-    private HttpMethod httpMethod;
     private HashMap<String, Object> params;
     private String url;
     private String baseUrl;
     private File uploadFile;
 
     private  <T> Request(HttpMethod httpMethod, HashMap<String, Object> params, String url, String baseUrl, File uploadFile, Callback<T> callback) {
-        this.httpMethod = httpMethod;
         this.params = params;
         this.url = url;
         this.baseUrl = baseUrl;

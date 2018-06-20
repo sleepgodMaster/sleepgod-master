@@ -1,4 +1,4 @@
-package com.sleepgod.net;
+package com.sleepgod.net.http;
 
 import java.util.Map;
 
@@ -20,6 +20,7 @@ import retrofit2.http.Streaming;
 import retrofit2.http.Url;
 
 /**
+ * Created by cool on 2018/6/20.
  * retrofit的所有功能
  */
 

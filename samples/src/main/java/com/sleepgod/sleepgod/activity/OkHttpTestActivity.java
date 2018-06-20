@@ -127,7 +127,7 @@ public class OkHttpTestActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                HttpApi.download("http://zd-flat-test-oss.oss-cn-shenzhen.aliyuncs.com/file_1529134019870.jpg", "/storage/emulated/0/CHINARES_APP/file_1529134019870.jpg", null, new IDownloadCallback() {
+                HttpApi.download("http://a.hiphotos.baidu.com/image/pic/item/c9fcc3cec3fdfc039afa6e3cd83f8794a5c226b7.jpg", "/storage/emulated/0/CHINARES_APP/file_1529134019870.jpg", null, new IDownloadCallback() {
                     @Override
                     public void onStart() {
 

@@ -3,7 +3,9 @@ package com.sleepgod.net.http;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 import okhttp3.ResponseBody;
-
+/**
+ * Created by cool on 2018/6/20.
+ */
 public class HttpOberver implements Observer<ResponseBody> {
 
     private Callback callback;

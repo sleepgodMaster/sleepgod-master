@@ -1,5 +1,7 @@
 package com.sleepgod.net.base.view;
-
+/**
+ * Created by cool on 2018/6/20.
+ */
 public interface BaseView {
 
     /**
