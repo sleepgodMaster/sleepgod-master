@@ -26,12 +26,15 @@ import okhttp3.ResponseBody;
 public class MainPresenter extends BasePresenter<MainView> {
 
     public void testGet() {
-        HashMap<String, Object> params = new HashMap<>();
-        params.put("appKey","1328ffff76a74d2987914a0de08b9f44");
-        params.put("category","要闻");
-        params.put("updateTime","2018-06-21 00:00:00");
+//        HashMap<String, Object> params = new HashMap<>();
+//        params.put("appKey","1328ffff76a74d2987914a0de08b9f44");
+//        params.put("category","要闻");
+//        params.put("updateTime","2018-06-21 00:00:00");
         HttpClient.create(this)
-                .params(params)
+//                .params(params)
+                .requestParams("appKey","1328ffff76a74d2987914a0de08b9f44")
+                .requestParams("category","要闻")
+                .requestParams("updateTime","2018-06-21 00:00:00")
                 .showLodding(true)
                 .url("api/news/list")
                 .builder()

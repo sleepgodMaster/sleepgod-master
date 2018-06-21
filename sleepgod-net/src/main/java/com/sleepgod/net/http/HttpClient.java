@@ -53,7 +53,7 @@ public class HttpClient {
         private boolean showLodding;
         private String title;
         private HttpMethod httpMethod = HttpMethod.GET;
-        private HashMap<String, Object> params;
+        private HashMap<String, Object> params = new HashMap<>();
         private String url;
         private String baseUrl;
         private File uploadFile;
@@ -114,7 +114,12 @@ public class HttpClient {
         }
 
         public Builder params(HashMap<String, Object> params) {
-            this.params = params;
+            this.params.putAll(params);
+            return this;
+        }
+
+        public Builder requestParams(String key,Object value){
+            this.params.put(key,value);
             return this;
         }
 
