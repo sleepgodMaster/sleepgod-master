@@ -3,7 +3,6 @@ package com.sleepgod.net.base.presenter;
 import android.app.Activity;
 
 import com.sleepgod.net.base.view.BaseView;
-import com.sleepgod.net.http.Callback;
 
 import java.util.ArrayList;
 import java.util.List;

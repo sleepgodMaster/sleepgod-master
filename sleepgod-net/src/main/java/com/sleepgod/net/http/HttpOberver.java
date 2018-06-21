@@ -1,5 +1,7 @@
 package com.sleepgod.net.http;
 
+import com.sleepgod.net.callback.Callback;
+
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 import okhttp3.ResponseBody;

@@ -7,7 +7,42 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="测试"
-        android:onClick="click"/>
+        android:text="测试get"
+        android:textAllCaps="false"
+        android:onClick="testGet"/>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:text="测试post"
+        android:onClick="testPost"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:text="测试download"
+        android:onClick="testDownload"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:text="测试upload"
+        android:onClick="testUpload"/>
+
+    <com.org.sleepgod.widget.ColorfulProgressBar
+        android:id="@+id/colorful_progressbar"
+        xmlns:cool="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        cool:reachedColor="#FF1493"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/tv_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </ScrollView>
 </LinearLayout>

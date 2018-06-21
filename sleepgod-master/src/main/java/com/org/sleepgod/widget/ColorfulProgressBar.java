@@ -31,8 +31,8 @@ public class ColorfulProgressBar extends View {
     private Paint mTextPaint;//文本画笔
     private int width;
     private int hight;
-    private int mCurrentProgress;
-    private int mTotalProgress = 100;
+    private long mCurrentProgress;
+    private long mTotalProgress = 100;
     private int textWith;
 
     public ColorfulProgressBar(Context context) {
@@ -150,12 +150,12 @@ public class ColorfulProgressBar extends View {
         hight = h;
     }
 
-    public void setProgress(int currentProgress) {
+    public void setProgress(long currentProgress) {
         mCurrentProgress = currentProgress;
         invalidate();
     }
 
-    public void setMax(int totalProgress) {
+    public void setMax(long totalProgress) {
         mTotalProgress = totalProgress;
     }
 }

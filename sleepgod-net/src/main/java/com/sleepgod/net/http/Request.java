@@ -2,6 +2,8 @@ package com.sleepgod.net.http;
 
 import android.text.TextUtils;
 
+import com.sleepgod.net.callback.Callback;
+
 import java.io.File;
 import java.util.HashMap;
 
@@ -10,7 +12,9 @@ import io.reactivex.ObservableSource;
 import io.reactivex.ObservableTransformer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.MediaType;
 import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 /**
  * Created by cool on 2018/6/20.
@@ -52,6 +56,10 @@ public class Request {
             service = retrofitCreator.createService();
         }
 
+        if(params == null){
+            params = new HashMap<>();
+        }
+
         Observable<ResponseBody> observable = null;
 
         switch (httpMethod) {
@@ -71,13 +79,15 @@ public class Request {
                 if(uploadFile == null){
                     throw new IllegalArgumentException("file cannot be null");
                 }
+                RequestBody requestFile =
+                        RequestBody.create(MediaType.parse("multipart/form-data"), uploadFile);
                 final MultipartBody.Part body=MultipartBody.Part.createFormData(
-                        "file",uploadFile.getName());
+                        "file",uploadFile.getName(),requestFile);
                 observable = service.upload(url,body);
                 break;
             case DOWNLOAD:
-                downLoad();
-                return;
+                observable = service.download(url,params);
+                break;
         }
         if(observable != null){
             toSubscribe(observable,callback);
@@ -88,9 +98,5 @@ public class Request {
     private <T> void toSubscribe(Observable<ResponseBody> observable, Callback<T> callback) {
         observable.compose(getComposer())
                 .subscribe(new HttpOberver(callback));
-    }
-
-    private void downLoad() {
-
     }
 }

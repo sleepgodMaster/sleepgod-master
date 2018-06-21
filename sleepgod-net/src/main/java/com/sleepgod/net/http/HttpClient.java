@@ -1,6 +1,9 @@
 package com.sleepgod.net.http;
 
+import com.sleepgod.net.callback.FileCallback;
+import com.sleepgod.net.callback.HttpCallback;
 import com.sleepgod.net.base.presenter.BasePresenter;
+import com.sleepgod.net.callback.Callback;
 
 import java.io.File;
 import java.lang.ref.WeakReference;
@@ -31,9 +34,13 @@ public class HttpClient {
         this.uploadFile = builder.uploadFile;
     }
 
-    public <T> void execute(Callback<T> callback){
-        callback.init(presenterWReference, showLodding,title);
-        Request.newRequest(httpMethod,params,url,baseUrl,uploadFile,callback);
+    public <T> void execute(Callback<T> callback) {
+        if (callback instanceof HttpCallback) {
+            ((HttpCallback) callback).init(presenterWReference, showLodding, title);
+        }else if(callback instanceof FileCallback){
+            ((FileCallback)callback).init(presenterWReference,url);
+        }
+        Request.newRequest(httpMethod, params, url, baseUrl, uploadFile, callback);
     }
 
 
@@ -66,18 +73,33 @@ public class HttpClient {
         }
 
         public Builder get() {
-            httpMethod = HttpMethod.GET;
+            this.httpMethod = HttpMethod.GET;
             return this;
         }
 
         public Builder post() {
-            httpMethod = HttpMethod.POST;
+            this.httpMethod = HttpMethod.POST;
             return this;
         }
 
-        public Builder upload(File uploadFile){
+        public Builder put(){
+            this.httpMethod = HttpMethod.PUT;
+            return this;
+        }
+
+        public Builder delete(){
+            this.httpMethod = HttpMethod.DELETE;
+            return this;
+        }
+
+        public Builder upload(File uploadFile) {
             this.uploadFile = uploadFile;
             httpMethod = HttpMethod.UPLOAD;
+            return this;
+        }
+
+        public Builder download() {
+            this.httpMethod = HttpMethod.DOWNLOAD;
             return this;
         }
 
@@ -87,7 +109,7 @@ public class HttpClient {
         }
 
         public Builder baseUrl(String baseUrl) {
-            this.baseUrl = url;
+            this.baseUrl = baseUrl;
             return this;
         }
 

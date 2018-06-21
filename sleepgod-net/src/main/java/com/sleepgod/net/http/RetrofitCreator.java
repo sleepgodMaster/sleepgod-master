@@ -15,7 +15,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 public class RetrofitCreator {
     private static volatile RetrofitCreator instance;
     private Map<String, Retrofit> mRetrofitCache = new HashMap<>();
-    private final static String BASE_URL = "http://gank.io/";
+    private final static String BASE_URL = "http://api.shujuzhihui.cn//";
 
     private RetrofitCreator(){
 
