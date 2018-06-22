@@ -77,7 +77,7 @@ public class Request {
         }
 
         Observable<ResponseBody> observable = null;
-        getRequestParams(httpMethod);
+        getRequestParams();
 
         switch (httpMethod) {
             case GET:
@@ -116,10 +116,7 @@ public class Request {
 
     }
 
-    private void getRequestParams(HttpMethod httpMethod) {
-        if(httpMethod == HttpMethod.POST_JSON || httpMethod == HttpMethod.PUT_JSON){
-            return;
-        }
+    private void getRequestParams() {
         if (requestBean != null) {
             try {
                 Class<?> requestBeanClass = requestBean.getClass();
@@ -149,11 +146,8 @@ public class Request {
 
     @NonNull
     private RequestBody getJsonRequestBody() {
-        if (requestBean == null) {
-            throw new IllegalArgumentException("requestBean cannot be null");
-        }
         MediaType textType = MediaType.parse("application/json");
-        return RequestBody.create(textType, new Gson().toJson(requestBean));
+        return RequestBody.create(textType, new Gson().toJson(params));
     }
 
     private <T> void toSubscribe(Observable<ResponseBody> observable, Callback<T> callback) {

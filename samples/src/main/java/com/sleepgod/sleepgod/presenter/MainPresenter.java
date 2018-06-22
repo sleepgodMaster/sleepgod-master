@@ -3,6 +3,7 @@ package com.sleepgod.sleepgod.presenter;
 
 import android.util.Log;
 
+import com.google.gson.Gson;
 import com.sleepgod.net.callback.FileCallback;
 import com.sleepgod.net.callback.HttpCallback;
 import com.sleepgod.net.base.presenter.BasePresenter;
@@ -53,6 +54,10 @@ public class MainPresenter extends BasePresenter<MainView> {
         HashMap<String, Object> params = new HashMap<>();
         params.put("appKey", "b5baa6d5add44cc3a6f9bd7596953669");
         params.put("area", "苏州");
+
+        String s = new Gson().toJson(params);
+        Log.e("399","s: " + s);
+
         HttpClient.create(this)
                 .params(params)
                 .showLodding(true)
@@ -111,10 +116,7 @@ public class MainPresenter extends BasePresenter<MainView> {
     }
 
     public void testPostJson() {
-        final RequestBean requestBean = new RequestBean("b5baa6d5add44cc3a6f9bd7596953669", "苏州");
-        HashMap<String, Object> params = new HashMap<>();
-        params.put("appKey", "b5baa6d5add44cc3a6f9bd7596953669");
-        params.put("area", "苏州");
+        RequestBean requestBean = new RequestBean("b5baa6d5add44cc3a6f9bd7596953669", "苏州");
         HttpClient.create(this)
                 .params(requestBean)
                 .postJson()
