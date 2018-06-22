@@ -47,6 +47,9 @@ public class RetrofitTestActivity extends MVPActivity<MainView,MainPresenter> im
     public void testPost(View view){
         mPresenter.testPost();
     }
+    public void testPostJson(View view){
+        mPresenter.testPostJson();
+    }
 
     public void testDownload(View view){
         mPresenter.testDownLoad();

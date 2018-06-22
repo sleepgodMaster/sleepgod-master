@@ -2,10 +2,10 @@ package com.sleepgod.net.http;
 
 public enum HttpMethod {
     GET,
-    GET_RAW,
     POST,
-    POST_RAW,
+    POST_JSON,
     PUT,
+    PUT_JSON,
     DELETE,
     UPLOAD,
     DOWNLOAD

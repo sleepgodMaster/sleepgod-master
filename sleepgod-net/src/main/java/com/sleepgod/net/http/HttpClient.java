@@ -19,6 +19,8 @@ public class HttpClient {
     private String title;
     private HttpMethod httpMethod;
     private HashMap<String, Object> params;
+    private HashMap<String,String> heads;
+    private Object requestBean;
     private String url;
     private String baseUrl;
     private File uploadFile;
@@ -29,6 +31,8 @@ public class HttpClient {
         this.title = builder.title;
         this.httpMethod = builder.httpMethod;
         this.params = builder.params;
+        this.heads = builder.heads;
+        this.requestBean = builder.requestBean;
         this.url = builder.url;
         this.baseUrl = builder.baseUrl;
         this.uploadFile = builder.uploadFile;
@@ -40,7 +44,7 @@ public class HttpClient {
         }else if(callback instanceof FileCallback){
             ((FileCallback)callback).init(presenterWReference,url);
         }
-        Request.newRequest(httpMethod, params, url, baseUrl, uploadFile, callback);
+        Request.newRequest(httpMethod, params,heads,requestBean, url, baseUrl, uploadFile, callback);
     }
 
 
@@ -54,6 +58,8 @@ public class HttpClient {
         private String title;
         private HttpMethod httpMethod = HttpMethod.GET;
         private HashMap<String, Object> params = new HashMap<>();
+        private HashMap<String,String> heads = new HashMap<>();
+        private Object requestBean;
         private String url;
         private String baseUrl;
         private File uploadFile;
@@ -79,6 +85,16 @@ public class HttpClient {
 
         public Builder post() {
             this.httpMethod = HttpMethod.POST;
+            return this;
+        }
+
+        public Builder postJson(){
+            this.httpMethod = HttpMethod.POST_JSON;
+            return this;
+        }
+
+        public Builder putJson(){
+            this.httpMethod = HttpMethod.PUT_JSON;
             return this;
         }
 
@@ -118,8 +134,18 @@ public class HttpClient {
             return this;
         }
 
+        public Builder params(Object requestBean){
+            this.requestBean = requestBean;
+            return this;
+        }
+
         public Builder requestParams(String key,Object value){
             this.params.put(key,value);
+            return this;
+        }
+
+        public Builder heads(String key,String value){
+            this.heads.put(key,value);
             return this;
         }
 

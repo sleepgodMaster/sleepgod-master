@@ -115,7 +115,7 @@ public class WeatherBean {
             public String date;
             public String wdp;
             public String wdd;
-            public int rain;
+            public float rain;
             public String weather;
             public String humidity;
             public String tem;

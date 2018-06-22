@@ -3,7 +3,6 @@ package com.sleepgod.sleepgod.presenter;
 
 import android.util.Log;
 
-import com.sleepgod.net.callback.Callback;
 import com.sleepgod.net.callback.FileCallback;
 import com.sleepgod.net.callback.HttpCallback;
 import com.sleepgod.net.base.presenter.BasePresenter;
@@ -11,14 +10,11 @@ import com.sleepgod.net.http.HttpClient;
 import com.sleepgod.net.http.Progress;
 import com.sleepgod.sleepgod.bean.BaseBean;
 import com.sleepgod.sleepgod.bean.NewsBean;
+import com.sleepgod.sleepgod.bean.RequestBean;
 import com.sleepgod.sleepgod.bean.WeatherBean;
 import com.sleepgod.sleepgod.view.MainView;
 
-import java.io.File;
 import java.util.HashMap;
-
-import io.reactivex.disposables.Disposable;
-import okhttp3.ResponseBody;
 
 /**
  * Created by cool on 2018/6/20.
@@ -32,9 +28,10 @@ public class MainPresenter extends BasePresenter<MainView> {
 //        params.put("updateTime","2018-06-21 00:00:00");
         HttpClient.create(this)
 //                .params(params)
-                .requestParams("appKey","1328ffff76a74d2987914a0de08b9f44")
-                .requestParams("category","要闻")
-                .requestParams("updateTime","2018-06-21 00:00:00")
+                .requestParams("appKey", "1328ffff76a74d2987914a0de08b9f44")
+                .requestParams("category", "要闻")
+                .requestParams("updateTime", "2018-06-21 00:00:00")
+                .heads("a", "aa")
                 .showLodding(true)
                 .url("api/news/list")
                 .builder()
@@ -52,15 +49,16 @@ public class MainPresenter extends BasePresenter<MainView> {
 
     }
 
-    public void testPost(){
-        HashMap<String,Object> params = new HashMap<>();
-        params.put("appKey","b5baa6d5add44cc3a6f9bd7596953669");
-        params.put("area","苏州");
+    public void testPost() {
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("appKey", "b5baa6d5add44cc3a6f9bd7596953669");
+        params.put("area", "苏州");
         HttpClient.create(this)
                 .params(params)
                 .showLodding(true)
-                .baseUrl("http://api.shujuzhihui.cn/")
                 .url("api/weather/area")
+                .heads("a", "aa")
+                .heads("b", "bb")
                 .post()
                 .builder()
                 .execute(new HttpCallback<BaseBean<WeatherBean>>() {
@@ -76,7 +74,10 @@ public class MainPresenter extends BasePresenter<MainView> {
                 });
     }
 
-    public void testDownLoad(){
+    /**
+     * FileCallback 有3个重载构造函数
+     */
+    public void testDownLoad() {
         //http://app.mi.com/download/427632
         //http://dlied5.myapp.com/myapp/1104466820/sgame/2017_com.tencent.tmgp.sgame_h169_1.34.1.23_2fc1ef.apk
 //        HashMap<String,Object> params = new HashMap<>();
@@ -89,22 +90,46 @@ public class MainPresenter extends BasePresenter<MainView> {
                 .execute(new FileCallback() {
                     @Override
                     public void onStart() {
-                        Log.e("399","onStart");
+                        Log.e("399", "onStart");
                     }
 
                     @Override
                     public void onDownloadComplete() {
-                        Log.e("399","onDownloadComplete" + " thread: " + Thread.currentThread().getName());
+                        Log.e("399", "onDownloadComplete" + " thread: " + Thread.currentThread().getName());
                     }
 
                     @Override
                     public void onError(String msg) {
-                        Log.e("399","onError" + " thread: " + Thread.currentThread().getName() + "  msg:" + msg);
+                        Log.e("399", "onError" + " thread: " + Thread.currentThread().getName() + "  msg:" + msg);
                     }
 
                     @Override
                     public void onDownloading(Progress progress) {
                         mView.onProgress(progress);
+                    }
+                });
+    }
+
+    public void testPostJson() {
+        final RequestBean requestBean = new RequestBean("b5baa6d5add44cc3a6f9bd7596953669", "苏州");
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("appKey", "b5baa6d5add44cc3a6f9bd7596953669");
+        params.put("area", "苏州");
+        HttpClient.create(this)
+                .params(requestBean)
+                .postJson()
+                .url("api/weather/area")
+                .showLodding(true)
+                .builder()
+                .execute(new HttpCallback<String>() {
+                    @Override
+                    public void onSuccess(String s) {
+                        mView.getDataSuccess(s);
+                    }
+
+                    @Override
+                    public void onError(String msg) {
+                        mView.getDataFail(msg);
                     }
                 });
     }
@@ -125,5 +150,7 @@ public class MainPresenter extends BasePresenter<MainView> {
 //
 //                    }
 //                });
+
     }
+
 }
