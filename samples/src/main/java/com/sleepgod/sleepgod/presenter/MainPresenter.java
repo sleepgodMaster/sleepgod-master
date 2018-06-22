@@ -55,9 +55,6 @@ public class MainPresenter extends BasePresenter<MainView> {
         params.put("appKey", "b5baa6d5add44cc3a6f9bd7596953669");
         params.put("area", "苏州");
 
-        String s = new Gson().toJson(params);
-        Log.e("399","s: " + s);
-
         HttpClient.create(this)
                 .params(params)
                 .showLodding(true)
@@ -85,9 +82,7 @@ public class MainPresenter extends BasePresenter<MainView> {
     public void testDownLoad() {
         //http://app.mi.com/download/427632
         //http://dlied5.myapp.com/myapp/1104466820/sgame/2017_com.tencent.tmgp.sgame_h169_1.34.1.23_2fc1ef.apk
-//        HashMap<String,Object> params = new HashMap<>();
         HttpClient.create(this)
-//                .params(params)
                 .download()
                 .url("software/mobile/MockMobile_v3.4.0.0.apk")
                 .baseUrl("http://cdn.mockplus.cn/")
