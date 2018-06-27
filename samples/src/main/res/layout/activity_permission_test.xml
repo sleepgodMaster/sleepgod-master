@@ -5,27 +5,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".activity.RetrofitTestActivity">
-
+    tools:context=".permission.PermissionTestActivity">
     <Button
-        android:id="@+id/go_okhttp_bt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="OkHttp测试"
-        android:textAllCaps="false"/>
-
-    <Button
-        android:id="@+id/bt_retrofit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Retofit测试"
-        android:textAllCaps="false"/>
-
-    <Button
-        android:id="@+id/bt_aop"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAllCaps="false"
-        android:text="权限测试"/>
+        android:text="测试Activity申请权限"
+        android:onClick="testActivity"/>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:text="测试Activity申请权限(带请求码)"
+        android:onClick="testRequestCode"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:text="测试任意类申请权限"
+        android:onClick="testNormal"/>
 </LinearLayout>

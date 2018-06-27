@@ -1,7 +1,6 @@
 package com.sleepgod.sleepgod;
 
 import android.content.Context;
-import android.text.TextUtils;
 
 import com.sleepgod.ok.http.IDownloadCallback;
 import com.sleepgod.ok.http.IResponseCallback;
@@ -27,7 +26,7 @@ public class HttpApi {
     private static HeaderBuilder headerBuilder = null;
 
     static {
-        okHttpCaller = OkHttpCaller.getInstance(MyApplication.getApplication());
+        okHttpCaller = OkHttpCaller.getInstance(App.getApplication());
     }
 
     private static class HeaderBuilder {
@@ -52,7 +51,7 @@ public class HttpApi {
      * 请求头
      */
     public static HeaderBuilder getHeaderBuilder() {
-        Context context = MyApplication.getApplication();
+        Context context = App.getApplication();
         headerBuilder = new HeaderBuilder()
                 .put("content-type", "application/json")
                 .put("timestamp", String.valueOf(System.currentTimeMillis()))

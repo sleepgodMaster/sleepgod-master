@@ -81,7 +81,6 @@ public class MainPresenter extends BasePresenter<MainView> {
      */
     public void testDownLoad() {
         //http://app.mi.com/download/427632
-        //http://dlied5.myapp.com/myapp/1104466820/sgame/2017_com.tencent.tmgp.sgame_h169_1.34.1.23_2fc1ef.apk
         HttpClient.create(this)
                 .download()
                 .url("software/mobile/MockMobile_v3.4.0.0.apk")

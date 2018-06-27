@@ -1,11 +1,13 @@
 package com.sleepgod.sleepgod.activity;
 
+import android.Manifest;
 import android.view.View;
 import android.widget.TextView;
 
 import com.org.sleepgod.widget.ColorfulProgressBar;
 import com.sleepgod.net.base.activity.MVPActivity;
 import com.sleepgod.net.http.Progress;
+import com.sleepgod.permission.annotation.APermission;
 import com.sleepgod.sleepgod.R;
 import com.sleepgod.sleepgod.presenter.MainPresenter;
 import com.sleepgod.sleepgod.view.MainView;
@@ -51,6 +53,7 @@ public class RetrofitTestActivity extends MVPActivity<MainView,MainPresenter> im
         mPresenter.testPostJson();
     }
 
+    @APermission(permissions = Manifest.permission.WRITE_EXTERNAL_STORAGE)
     public void testDownload(View view){
         mPresenter.testDownLoad();
     }

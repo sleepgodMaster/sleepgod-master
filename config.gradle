@@ -21,7 +21,8 @@ ext{
             rxjava = "2.1.14",
             okhttp3 = "3.10.0",
             gson = "2.8.0",
-            butterknife = "8.5.1"
+            butterknife = "8.5.1",
+            aspectj = "1.8.9"
     ]
 
     dependencies = [
@@ -36,6 +37,7 @@ ext{
             okhttp3                   : "com.squareup.okhttp3:okhttp:$rootProject.okhttp3",
             gson                      : "com.google.code.gson:gson:$rootProject.gson",
             butterknife               : "com.jakewharton:butterknife:$rootProject.butterknife",
-            butterknifeCompiler       : "com.jakewharton:butterknife-compiler:$rootProject.butterknife"
+            butterknifeCompiler       : "com.jakewharton:butterknife-compiler:$rootProject.butterknife",
+            aspectj                   : "org.aspectj:aspectjrt:$rootProject.aspectj"
     ]
 }

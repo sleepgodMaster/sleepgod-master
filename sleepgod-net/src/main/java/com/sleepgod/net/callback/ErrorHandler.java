@@ -41,7 +41,9 @@ public abstract class ErrorHandler {
                 errString = "服务君累趴下啦";
             } else if (httpEx.code() == 0) {
                 errString = "服务君累趴下啦";
-            } else if (httpEx.code() == 403) {
+            } else if(httpEx.code() == 401){
+                errString = "未授权";
+            }else if (httpEx.code() == 403) {
                 errString = "禁止访问";
             } else if (httpEx.code() == 404) {
                 errString = "资源不存在";
