@@ -1,4 +1,4 @@
-package com.sleepgod.permission;
+package com.sleepgod.permission.permission;
 
 import android.app.Activity;
 import android.content.Context;
@@ -11,6 +11,11 @@ import android.support.v4.app.ActivityCompat;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
+
+import com.sleepgod.permission.CustomerDialog;
+import com.sleepgod.permission.R;
+import com.sleepgod.permission.RuntimeSettingPage;
+import com.sleepgod.permission.Utils;
 
 import java.util.ArrayList;
 import java.util.List;

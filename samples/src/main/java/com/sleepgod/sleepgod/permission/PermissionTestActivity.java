@@ -7,7 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.sleepgod.permission.Permission;
+import com.sleepgod.permission.permission.Permission;
 import com.sleepgod.permission.annotation.APermission;
 import com.sleepgod.permission.annotation.APermissionDenied;
 import com.sleepgod.permission.annotation.APermissionRationale;

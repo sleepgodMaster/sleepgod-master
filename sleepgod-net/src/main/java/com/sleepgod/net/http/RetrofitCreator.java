@@ -1,8 +1,11 @@
 package com.sleepgod.net.http;
 
+import android.text.TextUtils;
+
 import java.util.HashMap;
 import java.util.Map;
 
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -15,10 +18,9 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 public class RetrofitCreator {
     private static volatile RetrofitCreator instance;
     private Map<String, Retrofit> mRetrofitCache = new HashMap<>();
-    private final static String BASE_URL = "http://api.shujuzhihui.cn/";
+    HttpConfig.Builder configBuilder;
 
-    private RetrofitCreator(){
-
+    private RetrofitCreator() {
     }
 
     public static RetrofitCreator getInstance() {
@@ -33,7 +35,10 @@ public class RetrofitCreator {
     }
 
     public Retrofit getRetrofit() {
-        Retrofit retrofit = retrofit(BASE_URL);
+        if(TextUtils.isEmpty(configBuilder.BASE_URL)){
+            throw new IllegalArgumentException("please config baseUrl");
+        }
+        Retrofit retrofit = retrofit(configBuilder.BASE_URL);
         return retrofit;
     }
 
@@ -47,7 +52,7 @@ public class RetrofitCreator {
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
                     .baseUrl(baseUrl)
-                    .client(new OkHttpClient())
+                    .client(getOkHttpClient())
                     .addConverterFactory(ScalarsConverterFactory.create())
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .build();
@@ -56,12 +61,26 @@ public class RetrofitCreator {
         return retrofit;
     }
 
-    public ApiService createService(){
+    private OkHttpClient getOkHttpClient() {
+        OkHttpClient.Builder builder = new OkHttpClient.Builder();
+        builder.readTimeout(configBuilder.readTimeout, configBuilder.readTimeUnit)
+                .writeTimeout(configBuilder.writeTimeout, configBuilder.writeTimeUnit)
+                .connectTimeout(configBuilder.connTimeout, configBuilder.connTimeUnit);
+        for (Interceptor interceptor : configBuilder.INTERCEPTORS) {
+            builder.addInterceptor(interceptor);
+        }
+        return builder.build();
+    }
+
+    public ApiService createService() {
         return getRetrofit().create(ApiService.class);
     }
 
-    public ApiService createService(String baseUrl){
+    public ApiService createService(String baseUrl) {
         return getRetrofit(baseUrl).create(ApiService.class);
     }
 
+    public void initBuilder(HttpConfig.Builder builder) {
+        this.configBuilder = builder;
+    }
 }

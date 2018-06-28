@@ -13,9 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.sleepgod.permission;
-
-import android.content.Context;
+package com.sleepgod.permission.permission;
 
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -1,4 +1,4 @@
-package com.sleepgod.permission;
+package com.sleepgod.permission.permission;
 
 import java.util.List;
 

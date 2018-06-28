@@ -27,7 +27,6 @@ dependencies {
     implementation project(':sleepgod-net')
     implementation project(':sleepgod-ok')
     implementation project(':sleepgod-permission')
-    implementation project(':sleepgod-rxpermission')
     implementation rootProject.ext.dependencies.appcompat_v7
     implementation rootProject.ext.dependencies.constraint_layout
     implementation rootProject.ext.dependencies.butterknife

@@ -5,8 +5,8 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.widget.Toast;
 
-import com.sleepgod.permission.Permission;
-import com.sleepgod.permission.PermissionActivity;
+import com.sleepgod.permission.permission.Permission;
+import com.sleepgod.permission.permission.PermissionActivity;
 import com.sleepgod.permission.Utils;
 import com.sleepgod.permission.annotation.APermission;
 import com.sleepgod.permission.annotation.APermissionDenied;
