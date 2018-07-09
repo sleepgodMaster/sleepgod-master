@@ -5,12 +5,11 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.cool.butterknife.annoation.OnClick;
+import com.cool.butterknife.core.ButterKnife;
 import com.sleepgod.sleepgod.activity.OkHttpTestActivity;
 import com.sleepgod.sleepgod.activity.RetrofitTestActivity;
 import com.sleepgod.sleepgod.permission.PermissionTestActivity;
-
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity {
 

@@ -4,6 +4,8 @@ import android.Manifest;
 import android.view.View;
 import android.widget.TextView;
 
+import com.cool.butterknife.annoation.BindView;
+import com.cool.butterknife.core.ButterKnife;
 import com.org.sleepgod.widget.ColorfulProgressBar;
 import com.sleepgod.net.base.activity.MVPActivity;
 import com.sleepgod.net.http.Progress;
@@ -12,15 +14,13 @@ import com.sleepgod.sleepgod.R;
 import com.sleepgod.sleepgod.presenter.MainPresenter;
 import com.sleepgod.sleepgod.view.MainView;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
-public class RetrofitTestActivity extends MVPActivity<MainView,MainPresenter> implements MainView{
+public class RetrofitTestActivity extends BaseSleepActivity<MainView,MainPresenter> implements MainView{
 
     @BindView(R.id.colorful_progressbar)
     ColorfulProgressBar mColorfulProgressBar;
-    @BindView(R.id.tv_text)
-    TextView mTextView;
+//    @BindView(R.id.tv_text)
+//    TextView mTextView;
 
     @Override
     public int setLayoutResID() {
@@ -29,7 +29,7 @@ public class RetrofitTestActivity extends MVPActivity<MainView,MainPresenter> im
 
     @Override
     public void initView() {
-        ButterKnife.bind(this);
+//        ButterKnife.bind(this);
     }
 
     @Override

@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.cool.butterknife.annoation.OnClick;
+import com.cool.butterknife.core.ButterKnife;
 import com.sleepgod.permission.permission.Permission;
 import com.sleepgod.permission.annotation.APermission;
 import com.sleepgod.permission.annotation.APermissionDenied;
@@ -19,22 +21,40 @@ public class PermissionTestActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_permission_test);
+        ButterKnife.bind(this);
     }
+
+    @OnClick({R.id.bt_test_activity, R.id.bt_rest_requestcode, R.id.bt_test_normal})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.bt_test_activity:
+                testActivity(view);
+                break;
+            case R.id.bt_rest_requestcode:
+                testRequestCode(view);
+                break;
+            case R.id.bt_test_normal:
+                testNormal(view);
+                break;
+        }
+    }
+
 
     @APermission(permissions = {Manifest.permission.CAMERA,
-            Manifest.permission.ACCESS_FINE_LOCATION},deniedMessage = "授权失败")
+            Manifest.permission.ACCESS_FINE_LOCATION}, deniedMessage = "授权失败")
     public void testActivity(View view) {
-        Toast.makeText(this,"授权成功,执行接下来的代码",Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "授权成功,执行接下来的代码", Toast.LENGTH_SHORT).show();
     }
 
 
-    @APermission(permissions = {Manifest.permission.BODY_SENSORS,Manifest.permission.READ_CALENDAR},requestCode = 10)
+    @APermission(permissions = {Manifest.permission.BODY_SENSORS, Manifest.permission.READ_CALENDAR}, requestCode = 10)
     public void testRequestCode(View view) {
-        Toast.makeText(this,"授权成功,执行接下来的代码",Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "授权成功,执行接下来的代码", Toast.LENGTH_SHORT).show();
     }
 
     /**
      * 测试任意类申请权限
+     *
      * @param view
      */
     public void testNormal(View view) {
@@ -43,19 +63,19 @@ public class PermissionTestActivity extends AppCompatActivity {
     }
 
     @APermissionDenied
-    public void permissionDenied(Permission permission){
-        Log.e("399","permissionDenied");
-        Log.e("399","code: " +permission.getRequestCode());
-        Log.e("399","list: " +permission.getRequestPermissions());
-        Toast.makeText(this,"permissionDenied " + "code: " +permission.getRequestCode() + "list: " +permission.getRequestPermissions(),Toast.LENGTH_SHORT).show();
+    public void permissionDenied(Permission permission) {
+        Log.e("399", "permissionDenied");
+        Log.e("399", "code: " + permission.getRequestCode());
+        Log.e("399", "list: " + permission.getRequestPermissions());
+        Toast.makeText(this, "permissionDenied " + "code: " + permission.getRequestCode() + "list: " + permission.getRequestPermissions(), Toast.LENGTH_SHORT).show();
     }
 
     @APermissionRationale
-    public void permissionRationale(Permission permission){
-        Log.e("399","permissionRationale");
-        Log.e("399","code: " +permission.getRequestCode());
-        Log.e("399","list: " +permission.getRequestPermissions());
-        Toast.makeText(this,"permissionRationale " + "code: " +permission.getRequestCode() + " list: " +permission.getRequestPermissions(),Toast.LENGTH_SHORT).show();
+    public void permissionRationale(Permission permission) {
+        Log.e("399", "permissionRationale");
+        Log.e("399", "code: " + permission.getRequestCode());
+        Log.e("399", "list: " + permission.getRequestPermissions());
+        Toast.makeText(this, "permissionRationale " + "code: " + permission.getRequestCode() + " list: " + permission.getRequestPermissions(), Toast.LENGTH_SHORT).show();
 
     }
 

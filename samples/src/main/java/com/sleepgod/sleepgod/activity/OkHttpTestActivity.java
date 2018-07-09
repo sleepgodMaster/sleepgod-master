@@ -5,13 +5,15 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.cool.butterknife.annoation.BindView;
+import com.cool.butterknife.annoation.OnClick;
+import com.cool.butterknife.core.ButterKnife;
 import com.sleepgod.ok.http.IDownloadCallback;
 import com.sleepgod.ok.http.IResponseCallback;
 import com.sleepgod.sleepgod.HttpApi;
@@ -25,10 +27,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * Created by cuiweicai on 2018/6/14.
@@ -53,11 +51,11 @@ public class OkHttpTestActivity extends AppCompatActivity {
         setContentView(R.layout.activity_okhttp_test);
         ButterKnife.bind(this);
 
-        if (checkPermission( Manifest.permission.WRITE_EXTERNAL_STORAGE,
+        if (checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE,
                 Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.READ_PHONE_STATE)) {
 
         } else {
-            requestPermission(3000,Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            requestPermission(3000, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE,
                     Manifest.permission.READ_PHONE_STATE, Manifest.permission.CALL_PHONE);
         }
 
@@ -71,6 +69,7 @@ public class OkHttpTestActivity extends AppCompatActivity {
         }
         return true;
     }
+
     public void requestPermission(int requestCode, String... permissions) {
         ActivityCompat.requestPermissions(this, permissions, requestCode);
     }
@@ -97,10 +96,10 @@ public class OkHttpTestActivity extends AppCompatActivity {
 
         HashMap<String, Object> params = new HashMap<>();
 
-        params.put("customerId","198");
-        params.put("token","");
-        params.put("complainMessage","墙掉色");
-        params.put("houseId","459");
+        params.put("customerId", "198");
+        params.put("token", "");
+        params.put("complainMessage", "墙掉色");
+        params.put("houseId", "459");
 
         List<File> files = new ArrayList<>();
         files.add(new File("/storage/emulated/0/CHINARES_APP/20180619_0253411.jpg"));
@@ -135,13 +134,13 @@ public class OkHttpTestActivity extends AppCompatActivity {
 
                     @Override
                     public void onProgress(long contentLength, int readLength, byte[] bytes) {
-                        float progress =  readLength * 1.0f / contentLength;
+                        float progress = readLength * 1.0f / contentLength;
                         final int precent = (int) (progress * 100);
-                        Log.e("RunOnUiThread", "onProgress: "+precent);
+                        Log.e("RunOnUiThread", "onProgress: " + precent);
                         OkHttpTestActivity.this.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                resultTv.setText(precent+"%");
+                                resultTv.setText(precent + "%");
                             }
                         });
                     }
@@ -163,7 +162,7 @@ public class OkHttpTestActivity extends AppCompatActivity {
 
     private void doGet() {
         Map<String, Object> params = new HashMap<>();
-        params.put("city","北京");
+        params.put("city", "北京");
 
         HttpApi.get("https://www.sojson.com/open/api/weather/json.shtml", params, new IResponseCallback() {
             @Override
@@ -211,7 +210,6 @@ public class OkHttpTestActivity extends AppCompatActivity {
         });
 
     }
-
 
 
 }

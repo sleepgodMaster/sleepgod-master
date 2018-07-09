@@ -1,1 +1,1 @@
-include ':samples',':sleepgod-master', ':sleepgod-ok', ':sleepgod-net', ':sleepgod-permission'
+include ':samples',':sleepgod-master', ':sleepgod-ok', ':sleepgod-net', ':sleepgod-permission',':butterKnife-annoation' ,':butterKnife-compiler',':butterknife-core'

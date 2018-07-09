@@ -7,23 +7,23 @@
     android:orientation="vertical"
     tools:context=".permission.PermissionTestActivity">
     <Button
+        android:id="@+id/bt_test_activity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAllCaps="false"
-        android:text="测试Activity申请权限"
-        android:onClick="testActivity"/>
+        android:text="测试Activity申请权限"/>
 
     <Button
+        android:id="@+id/bt_rest_requestcode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAllCaps="false"
-        android:text="测试Activity申请权限(带请求码)"
-        android:onClick="testRequestCode"/>
+        android:text="测试Activity申请权限(带请求码)"/>
 
     <Button
+        android:id="@+id/bt_test_normal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAllCaps="false"
-        android:text="测试任意类申请权限"
-        android:onClick="testNormal"/>
+        android:text="测试任意类申请权限"/>
 </LinearLayout>

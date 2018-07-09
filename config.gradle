@@ -22,7 +22,9 @@ ext{
             okhttp3 = "3.10.0",
             gson = "2.8.0",
             butterknife = "8.5.1",
-            aspectj = "1.8.9"
+            aspectj = "1.8.9",
+            auto_service = "1.0-rc2",
+            javapoet = "1.8.0"
     ]
 
     dependencies = [
@@ -38,6 +40,8 @@ ext{
             gson                      : "com.google.code.gson:gson:$rootProject.gson",
             butterknife               : "com.jakewharton:butterknife:$rootProject.butterknife",
             butterknifeCompiler       : "com.jakewharton:butterknife-compiler:$rootProject.butterknife",
-            aspectj                   : "org.aspectj:aspectjrt:$rootProject.aspectj"
+            aspectj                   : "org.aspectj:aspectjrt:$rootProject.aspectj",
+            auto_service              : "com.google.auto.service:auto-service:$rootProject.auto_service",
+            javapoet                  : "com.squareup:javapoet:$rootProject.javapoet"
     ]
 }

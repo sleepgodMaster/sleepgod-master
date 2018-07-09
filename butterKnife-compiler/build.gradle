@@ -1,0 +1,11 @@
+apply plugin: 'java-library'
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation project(':butterKnife-annoation')
+    implementation rootProject.ext.dependencies.auto_service
+    implementation rootProject.ext.dependencies.javapoet
+}
+
+sourceCompatibility = "1.7"
+targetCompatibility = "1.7"
