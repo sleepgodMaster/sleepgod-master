@@ -1,13 +1,13 @@
 /**
  * 统一处理依赖问题
  */
-ext{
+ext {
     android = [
             compileSdkVersion: 27,
-            minSdkVersion: 16,
-            targetSdkVersion: 27,
-            versionCode: 1,
-            versionName: "1.0"
+            minSdkVersion    : 16,
+            targetSdkVersion : 27,
+            versionCode      : 1,
+            versionName      : "1.0"
     ]
 
     libsVersion = [
@@ -24,24 +24,27 @@ ext{
             butterknife = "8.5.1",
             aspectj = "1.8.9",
             auto_service = "1.0-rc2",
-            javapoet = "1.8.0"
+            javapoet = "1.8.0",
+            leakcanary = "1.5.4"
     ]
 
     dependencies = [
-            appcompat_v7              : "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion",
-            constraint_layout         : "com.android.support.constraint:constraint-layout:$rootProject.constraint_layout",
-            retrofit                  : "com.squareup.retrofit2:retrofit:$rootProject.retrofit",
-            retrofit_converter_gson   : "com.squareup.retrofit2:converter-gson:$rootProject.retrofit_converter_gson",
-            retrofit_adapter_rxjava2  : "com.squareup.retrofit2:adapter-rxjava2:$rootProject.retrofit_adapter_rxjava2",
-            converter_scalars         : "com.squareup.retrofit2:converter-scalars:$rootProject.converter_scalars",
-            rxandroid                 : "io.reactivex.rxjava2:rxandroid:$rootProject.rxandroid",
-            rxjava                    : "io.reactivex.rxjava2:rxjava:$rootProject.rxjava",
-            okhttp3                   : "com.squareup.okhttp3:okhttp:$rootProject.okhttp3",
-            gson                      : "com.google.code.gson:gson:$rootProject.gson",
-            butterknife               : "com.jakewharton:butterknife:$rootProject.butterknife",
-            butterknifeCompiler       : "com.jakewharton:butterknife-compiler:$rootProject.butterknife",
-            aspectj                   : "org.aspectj:aspectjrt:$rootProject.aspectj",
-            auto_service              : "com.google.auto.service:auto-service:$rootProject.auto_service",
-            javapoet                  : "com.squareup:javapoet:$rootProject.javapoet"
+            appcompat_v7            : "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion",
+            constraint_layout       : "com.android.support.constraint:constraint-layout:$rootProject.constraint_layout",
+            retrofit                : "com.squareup.retrofit2:retrofit:$rootProject.retrofit",
+            retrofit_converter_gson : "com.squareup.retrofit2:converter-gson:$rootProject.retrofit_converter_gson",
+            retrofit_adapter_rxjava2: "com.squareup.retrofit2:adapter-rxjava2:$rootProject.retrofit_adapter_rxjava2",
+            converter_scalars       : "com.squareup.retrofit2:converter-scalars:$rootProject.converter_scalars",
+            rxandroid               : "io.reactivex.rxjava2:rxandroid:$rootProject.rxandroid",
+            rxjava                  : "io.reactivex.rxjava2:rxjava:$rootProject.rxjava",
+            okhttp3                 : "com.squareup.okhttp3:okhttp:$rootProject.okhttp3",
+            gson                    : "com.google.code.gson:gson:$rootProject.gson",
+            butterknife             : "com.jakewharton:butterknife:$rootProject.butterknife",
+            butterknifeCompiler     : "com.jakewharton:butterknife-compiler:$rootProject.butterknife",
+            aspectj                 : "org.aspectj:aspectjrt:$rootProject.aspectj",
+            auto_service            : "com.google.auto.service:auto-service:$rootProject.auto_service",
+            javapoet                : "com.squareup:javapoet:$rootProject.javapoet",
+            leakcanary_android      : "com.squareup.leakcanary:leakcanary-android:$rootProject.leakcanary",
+            leakcanary_android_no_op: "com.squareup.leakcanary:leakcanary-android-no-op:$rootProject.leakcanary",
     ]
 }

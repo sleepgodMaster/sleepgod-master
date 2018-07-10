@@ -40,11 +40,11 @@ public class PermissionAspect implements PermissionActivity.OnPermissionCallback
         String[] permissions = aPermission.permissions();
         Object target = joinPoint.getTarget();
         if (target instanceof Context) {
-            context = (Context) target;
+            context = ((Context) target).getApplicationContext();
         } else if (target instanceof Fragment) {
-            context = ((Fragment) target).getActivity();
+            context = ((Fragment) target).getActivity().getApplicationContext();
         } else if (target instanceof android.support.v4.app.Fragment) {
-            context = ((android.support.v4.app.Fragment) target).getActivity();
+            context = ((android.support.v4.app.Fragment) target).getActivity().getApplicationContext();
         } else {
             context = Utils.getContext();
         }

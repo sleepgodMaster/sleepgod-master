@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.sleepgod.net.http.HttpConfig;
 import com.sleepgod.ok.util.AppLog;
+import com.squareup.leakcanary.LeakCanary;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -27,6 +28,11 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            return;
+        }
+        LeakCanary.install(this);
+
         mApp = this;
         AppLog.setDEBUG(true);
         initHttpClient();

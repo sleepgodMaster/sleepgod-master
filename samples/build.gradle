@@ -18,6 +18,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    lintOptions {
+        abortOnError false
+    }
 }
 
 dependencies {
@@ -31,4 +34,6 @@ dependencies {
     implementation rootProject.ext.dependencies.constraint_layout
     implementation project(':butterknife-core')
     annotationProcessor project(':butterKnife-compiler')
+    debugImplementation rootProject.ext.dependencies.leakcanary_android
+    releaseImplementation rootProject.ext.dependencies.leakcanary_android_no_op
 }

@@ -17,7 +17,7 @@ apply plugin: 'android-aspectjx'
 ```
 dependencies {
      ...
-    implementation 'com.cool:apermission:1.0.0'
+    implementation 'com.cool:apermission:1.0.1'
 }
 ```
 
