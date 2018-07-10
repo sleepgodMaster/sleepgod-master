@@ -1,7 +1,7 @@
 # 权限申请框架APermission
 > APermission是一个android6.0申请权限的框架，免去写申请权限时的重复性代码,使用起来极其简单，可以说是我目前遇到使用的最方便的框架了，动态授权只需一个注解，而且可以在任何地方申请权限，不再局限于在activity,service中
 
-###一、既然这么好用，那该如何接入呢
+### 一、既然这么好用，那该如何接入呢
 1. 在项目的根目录的build.gradle中引入,注意是项目`根目录`
  ```
 dependencies {
@@ -37,7 +37,7 @@ APermission除了能指定permissions，还有下面功能
 * requestCode 请求码，当在多处申请权限时用来区分申请的权限
 * showRationaleDialog 当用户拒绝授权，并且勾选不再提示后是否弹框跳转到设置页面，默认为true
 
-#####如果想接受权限拒绝的回调，请使用@APermissionDenied注解
+##### 如果想接受权限拒绝的回调，请使用@APermissionDenied注解
 ```
  @APermissionDenied
     public void permissionDenied(Permission permission) {
@@ -45,7 +45,7 @@ APermission除了能指定permissions，还有下面功能
 ```
 > Permission中封装了请求失败的权限，以及请求码
 
-#####如果你并不关心Permission的信息，你可以这样使用
+##### 如果你并不关心Permission的信息，你可以这样使用
 ```
 @APermissionDenied
     public void permissionDenied() {
@@ -114,7 +114,7 @@ APermission除了能指定permissions，还有下面功能
             }
 ```
 
-###说明
+### 说明
 * 在@APermission注解中指定了deniedMessage，同时使用了@APermissionDenied 或@APermissionRationale注解的方法，指定的deniedMessage就无效了，就直接回调注解的方法了
 
 * 在@APermission注解的showRationaleDialog默认为true，所以当权限拒绝不在提示时后的弹框，并不影响后续回调
