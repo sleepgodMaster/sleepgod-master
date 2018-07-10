@@ -59,14 +59,18 @@ public final class PermissionTransform {
     public static final String WRITE_EXTERNAL_STORAGE = "android.permission.WRITE_EXTERNAL_STORAGE";
 
     /**
-     * Turn permissions into text.
+     *
+     * @param permissions array
+     * @return list
      */
     public static List<String> transformText(String... permissions) {
         return transformText(Arrays.asList(permissions));
     }
 
     /**
-     * Turn permissions into text.
+     *
+     * @param groups array
+     * @return list
      */
     public static List<String> transformText(String[]... groups) {
         List<String> permissionList = new ArrayList<>();
@@ -77,7 +81,9 @@ public final class PermissionTransform {
     }
 
     /**
-     * Turn permissions into text.
+     *
+     * @param permissions array
+     * @return list
      */
     public static List<String> transformText(List<String> permissions) {
         List<String> textList = new ArrayList<>();

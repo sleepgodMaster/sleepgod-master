@@ -2,7 +2,9 @@ package com.sleepgod.permission;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
@@ -13,7 +15,7 @@ import android.view.WindowManager;
  */
 public class CustomerDialog extends Dialog {
     public CustomerDialog(@NonNull Context context) {
-        this(context, R.style.white_bg_dialog);
+        this(context, R.style.permission_white_bg_dialog);
     }
 
     public CustomerDialog(@NonNull Context context, int theme) {
@@ -30,6 +32,7 @@ public class CustomerDialog extends Dialog {
         window.setAttributes(layoutParams);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.CUPCAKE)
     public CustomerDialog anim(int animStyleId) {
         Window window = getWindow();
         window.setWindowAnimations(animStyleId);

@@ -1,6 +1,5 @@
 package com.sleepgod.permission;
 
-import android.annotation.TargetApi;
 import android.app.Application;
 import android.content.Context;
 import android.content.pm.PackageInfo;
@@ -9,7 +8,6 @@ import android.content.pm.PackageManager;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -17,10 +15,8 @@ import java.util.List;
  * /**
  * 获取全局的context，也就是Application Context
  *
- * @return 返回全局的Context，只适用于android 4.0以后
  */
 
-@TargetApi(14)
 public class Utils {
 
     public static Context getContext() {
@@ -37,6 +33,8 @@ public class Utils {
 
     /**
      * Get a list of permissions in the manifest.
+     * @param context context
+     * @return list
      */
     public static List<String> getManifestPermissions(Context context) {
         context = context.getApplicationContext();
@@ -56,9 +54,9 @@ public class Utils {
     /**
      * dp转px
      *
-     * @param context
-     * @param dp
-     * @return
+     * @param context context
+     * @param dp dp
+     * @return px
      */
     public static int dp2px(Context context, float dp) {
         float density = context.getResources().getDisplayMetrics().density;
@@ -69,9 +67,9 @@ public class Utils {
     /**
      * px转dp
      *
-     * @param context
-     * @param px
-     * @return
+     * @param context context
+     * @param px px
+     * @return dp
      */
     public static int px2dp(Context context, float px) {
         float density = context.getResources().getDisplayMetrics().density;

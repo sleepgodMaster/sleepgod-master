@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.novoda.bintray-release'//发布到jcenter
 
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
@@ -19,6 +20,7 @@ android {
         }
     }
 
+
 }
 
 dependencies {
@@ -26,4 +28,15 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     implementation rootProject.ext.dependencies.appcompat_v7
     implementation rootProject.ext.dependencies.aspectj
+}
+
+//添加
+//发布命令参考https://www.jianshu.com/p/8f6dcd199b65
+publish {
+    userOrg = 'coollkkz'//bintray.com用户名
+    groupId = 'com.cool'//jcenter上的路径
+    artifactId = 'apermission'//项目名称
+    publishVersion = '1.0.0'//版本号
+    desc = 'a easy lib for request permission'//描述，不重要
+    website = 'https://github.com/sleepgodMaster/sleepgod-master/tree/master/sleepgod-permission'//网站，不重要,如果有自己的网站就放上去吧
 }

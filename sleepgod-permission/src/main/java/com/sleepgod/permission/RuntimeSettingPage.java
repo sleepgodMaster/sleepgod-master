@@ -41,7 +41,6 @@ public class RuntimeSettingPage {
      * Start.
      *
      * @param requestCode this code will be returned in onActivityResult() when the activity exits.
-     * @return true if successful, otherwise is false.
      */
     public void start(int requestCode) {
         Intent intent;
