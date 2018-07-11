@@ -17,6 +17,7 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 
+import java.lang.ref.WeakReference;
 import java.lang.reflect.Method;
 import java.util.List;
 
@@ -25,7 +26,7 @@ import java.util.List;
  */
 @Aspect
 public class PermissionAspect implements PermissionActivity.OnPermissionCallback {
-    private ProceedingJoinPoint joinPoint;
+    private WeakReference<ProceedingJoinPoint> joinPointRef;
     private APermission aPermission;
     private Context context;
 
@@ -35,7 +36,7 @@ public class PermissionAspect implements PermissionActivity.OnPermissionCallback
 
     @Around("methodAnnotationWithAPermission(aPermission)")
     public void permission(final ProceedingJoinPoint joinPoint, APermission aPermission) throws Throwable {
-        this.joinPoint = joinPoint;
+        this.joinPointRef = new WeakReference<>(joinPoint);
         this.aPermission = aPermission;
         String[] permissions = aPermission.permissions();
         Object target = joinPoint.getTarget();
@@ -52,13 +53,15 @@ public class PermissionAspect implements PermissionActivity.OnPermissionCallback
             return;
         }
 
-        PermissionActivity.requestPermission(context, permissions, aPermission.showRationaleDialog(),this);
+        PermissionActivity.requestPermission(context, permissions, aPermission.showRationaleDialog(), this);
     }
 
     @Override
     public void onGranted() {
         try {
-            joinPoint.proceed();
+            if (joinPointRef != null && joinPointRef.get() != null) {
+                joinPointRef.get().proceed();
+            }
         } catch (Throwable throwable) {
             throwable.printStackTrace();
         }
@@ -66,17 +69,21 @@ public class PermissionAspect implements PermissionActivity.OnPermissionCallback
 
     @Override
     public void onRationale(List<String> roationaleList) {
-        Method permissionRationaleMethod = getPermissionRationaleMethod(joinPoint.getTarget());
-        invoke(joinPoint.getTarget(), permissionRationaleMethod, roationaleList,  aPermission.requestCode());
+        if (joinPointRef != null && joinPointRef.get() != null) {
+            Method permissionRationaleMethod = getPermissionRationaleMethod(joinPointRef.get().getTarget());
+            invoke(joinPointRef.get().getTarget(), permissionRationaleMethod, roationaleList, aPermission.requestCode());
+        }
     }
 
     @Override
     public void onDenied(List<String> deniedList) {
-        Method permissionDeniedMethod = getPermissionDeniedMethod(joinPoint.getTarget());
-        if(permissionDeniedMethod == null && !TextUtils.isEmpty(aPermission.deniedMessage())){
-            Toast.makeText(context,aPermission.deniedMessage(),Toast.LENGTH_SHORT).show();
-        }else {
-            invoke(joinPoint.getTarget(), permissionDeniedMethod, deniedList, aPermission.requestCode());
+        if (joinPointRef != null && joinPointRef.get() != null) {
+            Method permissionDeniedMethod = getPermissionDeniedMethod(joinPointRef.get().getTarget());
+            if (permissionDeniedMethod == null && !TextUtils.isEmpty(aPermission.deniedMessage())) {
+                Toast.makeText(context, aPermission.deniedMessage(), Toast.LENGTH_SHORT).show();
+            } else {
+                invoke(joinPointRef.get().getTarget(), permissionDeniedMethod, deniedList, aPermission.requestCode());
+            }
         }
     }
 
