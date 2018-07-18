@@ -11,21 +11,25 @@
         android:id="@+id/go_okhttp_bt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="OkHttp测试"
-        android:textAllCaps="false"/>
+        android:text="OkHttp测试"/>
 
     <Button
         android:id="@+id/bt_retrofit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Retofit测试"
-        android:textAllCaps="false"/>
+        android:text="Retofit测试"/>
 
     <Button
         android:id="@+id/bt_aop"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAllCaps="false"
         android:text="aop权限测试"/>
+
+    <Button
+        android:id="@+id/bt_tageventbus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TagEventBus测试"
+        />
 
 </LinearLayout>

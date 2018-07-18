@@ -25,6 +25,7 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
     testImplementation 'junit:junit:4.12'
     implementation project(':sleepgod-master')
     implementation project(':sleepgod-net')
@@ -36,4 +37,5 @@ dependencies {
     annotationProcessor project(':butterKnife-compiler')
     debugImplementation rootProject.ext.dependencies.leakcanary_android
     releaseImplementation rootProject.ext.dependencies.leakcanary_android_no_op
+    implementation project(':tageventbus')
 }

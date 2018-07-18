@@ -42,6 +42,8 @@
         <activity
             android:name=".permission.PermissionTestActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".eventbus.EventSendActivity" />
+        <activity android:name=".eventbus.EventReceiverActivity"></activity>
     </application>
 
 </manifest>

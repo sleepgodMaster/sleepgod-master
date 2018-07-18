@@ -1,7 +1,14 @@
 /**
  * 统一处理依赖问题
  */
+
 ext {
+    /**
+     * 要发布那个库到jcenter就将那个库置为true
+     */
+    isPublishAPermission = false
+    isPublishTagEventbus = false
+
     android = [
             compileSdkVersion: 27,
             minSdkVersion    : 16,

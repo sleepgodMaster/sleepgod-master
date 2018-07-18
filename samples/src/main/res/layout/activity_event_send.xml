@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".eventbus.EventSendActivity">
+    <Button
+        android:id="@+id/bt_send_no_args"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="发送无参事件"/>
+
+    <Button
+        android:id="@+id/bt_send_one_args"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="发送1个参数事件"/>
+
+    <Button
+        android:id="@+id/bt_send_two_args"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="发送2个参数事件"/>
+
+    <Button
+        android:id="@+id/bt_send_three_args"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="发送3个参数事件"/>
+
+    <Button
+        android:id="@+id/bt_send_no_args_by_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="指定Tag发送无参事件"/>
+
+    <Button
+        android:id="@+id/bt_send_one_args_by_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="指定Tag发送一个参数事件"/>
+
+    <Button
+        android:id="@+id/bt_sync"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="在子线程中发送事件"/>
+</LinearLayout>

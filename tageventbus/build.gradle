@@ -1,5 +1,5 @@
 apply plugin: 'com.android.library'
-if (rootProject.isPublishAPermission) {
+if (rootProject.isPublishTagEventbus) {
     apply plugin: 'com.novoda.bintray-release'//发布到jcenter
 }
 
@@ -22,29 +22,22 @@ android {
         }
     }
 
-    lintOptions {
-        abortOnError false
-    }
-
 }
 
 dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
     testImplementation 'junit:junit:4.12'
-    implementation rootProject.ext.dependencies.appcompat_v7
-    implementation rootProject.ext.dependencies.aspectj
 }
-
 //添加
 //发布命令参考https://www.jianshu.com/p/8f6dcd199b65
-if (rootProject.isPublishAPermission) {
+if (rootProject.isPublishTagEventbus) {
     publish {
         userOrg = 'coollkkz'//bintray.com用户名
         groupId = 'com.cool'//jcenter上的路径
-        artifactId = 'apermission'//项目名称
-        publishVersion = '1.0.2'//版本号
-        desc = 'a easy lib for request permission'//描述，不重要
-        website = 'https://github.com/sleepgodMaster/sleepgod-master/tree/master/sleepgod-permission'
-//网站，不重要,如果有自己的网站就放上去吧
+        artifactId = 'tageventbus'//项目名称
+        publishVersion = '1.0.0'//版本号
+        desc = 'a easy lib for send and receiver event'//描述，不重要
+        website = 'https://github.com/sleepgodMaster/sleepgod-master/tree/master/tageventbus'
+        //网站，不重要,如果有自己的网站就放上去吧
     }
 }

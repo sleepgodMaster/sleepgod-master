@@ -5,19 +5,18 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.widget.Toast;
 
-import com.sleepgod.permission.permission.Permission;
-import com.sleepgod.permission.permission.PermissionActivity;
 import com.sleepgod.permission.Utils;
 import com.sleepgod.permission.annotation.APermission;
 import com.sleepgod.permission.annotation.APermissionDenied;
 import com.sleepgod.permission.annotation.APermissionRationale;
+import com.sleepgod.permission.permission.Permission;
+import com.sleepgod.permission.permission.PermissionActivity;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 
-import java.lang.ref.WeakReference;
 import java.lang.reflect.Method;
 import java.util.List;
 
@@ -26,7 +25,7 @@ import java.util.List;
  */
 @Aspect
 public class PermissionAspect implements PermissionActivity.OnPermissionCallback {
-    private WeakReference<ProceedingJoinPoint> joinPointRef;
+    private ProceedingJoinPoint joinPoint;
     private APermission aPermission;
     private Context context;
 
@@ -36,7 +35,7 @@ public class PermissionAspect implements PermissionActivity.OnPermissionCallback
 
     @Around("methodAnnotationWithAPermission(aPermission)")
     public void permission(final ProceedingJoinPoint joinPoint, APermission aPermission) throws Throwable {
-        this.joinPointRef = new WeakReference<>(joinPoint);
+        this.joinPoint = joinPoint;
         this.aPermission = aPermission;
         String[] permissions = aPermission.permissions();
         Object target = joinPoint.getTarget();
@@ -59,9 +58,8 @@ public class PermissionAspect implements PermissionActivity.OnPermissionCallback
     @Override
     public void onGranted() {
         try {
-            if (joinPointRef != null && joinPointRef.get() != null) {
-                joinPointRef.get().proceed();
-            }
+            joinPoint.proceed();
+            joinPoint = null;
         } catch (Throwable throwable) {
             throwable.printStackTrace();
         }
@@ -69,22 +67,20 @@ public class PermissionAspect implements PermissionActivity.OnPermissionCallback
 
     @Override
     public void onRationale(List<String> roationaleList) {
-        if (joinPointRef != null && joinPointRef.get() != null) {
-            Method permissionRationaleMethod = getPermissionRationaleMethod(joinPointRef.get().getTarget());
-            invoke(joinPointRef.get().getTarget(), permissionRationaleMethod, roationaleList, aPermission.requestCode());
-        }
+            Method permissionRationaleMethod = getPermissionRationaleMethod(joinPoint.getTarget());
+            invoke(joinPoint.getTarget(), permissionRationaleMethod, roationaleList, aPermission.requestCode());
+        joinPoint = null;
     }
 
     @Override
     public void onDenied(List<String> deniedList) {
-        if (joinPointRef != null && joinPointRef.get() != null) {
-            Method permissionDeniedMethod = getPermissionDeniedMethod(joinPointRef.get().getTarget());
+            Method permissionDeniedMethod = getPermissionDeniedMethod(joinPoint.getTarget());
             if (permissionDeniedMethod == null && !TextUtils.isEmpty(aPermission.deniedMessage())) {
                 Toast.makeText(context, aPermission.deniedMessage(), Toast.LENGTH_SHORT).show();
             } else {
-                invoke(joinPointRef.get().getTarget(), permissionDeniedMethod, deniedList, aPermission.requestCode());
+                invoke(joinPoint.getTarget(), permissionDeniedMethod, deniedList, aPermission.requestCode());
             }
-        }
+        joinPoint = null;
     }
 
     private void invoke(Object tagert, Method method, List<String> permissions, int requestCode) {
