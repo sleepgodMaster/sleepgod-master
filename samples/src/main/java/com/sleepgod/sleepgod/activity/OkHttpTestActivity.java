@@ -18,6 +18,7 @@ import com.sleepgod.ok.http.IDownloadCallback;
 import com.sleepgod.ok.http.IResponseCallback;
 import com.sleepgod.sleepgod.HttpApi;
 import com.sleepgod.sleepgod.R;
+import com.sleepgod.sleepgod.bean.OkTestBean;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -103,15 +104,15 @@ public class OkHttpTestActivity extends AppCompatActivity {
 
         List<File> files = new ArrayList<>();
         files.add(new File("/storage/emulated/0/CHINARES_APP/20180619_0253411.jpg"));
-        HttpApi.uploadFile("", files, params, new IResponseCallback() {
+        HttpApi.uploadFile("", files, params,null, new IResponseCallback() {
             @Override
             public void onStart() {
 
             }
 
             @Override
-            public void onFinish(String response) {
-                resultTv.setText(response);
+            public void onFinish(Object response) {
+                resultTv.setText(response.toString());
             }
 
             @Override
@@ -164,15 +165,16 @@ public class OkHttpTestActivity extends AppCompatActivity {
         Map<String, Object> params = new HashMap<>();
         params.put("city", "北京");
 
-        HttpApi.get("https://www.sojson.com/open/api/weather/json.shtml", params, new IResponseCallback() {
+        HttpApi.get("https://www.sojson.com/open/api/weather/json.shtml", params,null, new IResponseCallback() {
             @Override
             public void onStart() {
 
             }
 
             @Override
-            public void onFinish(String response) {
-                resultTv.setText(response);
+            public void onFinish(Object response) {
+                String s = (String) response;
+                resultTv.setText(s);
             }
 
             @Override
@@ -183,24 +185,23 @@ public class OkHttpTestActivity extends AppCompatActivity {
     }
 
     private void doPost() {
-        JSONObject params = HttpApi.buildRequestParams();
-        try {
+        Map<String, Object> params = HttpApi.buildRequestParams();
             params.put("page", 1);
-            params.put("pageSize", 1);
-            params.put("hotFlag", "Y");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+            params.put("pageSize", 5);
+            params.put("receiverId", "198");
 
-        HttpApi.post("", params, new IResponseCallback() {
+
+        HttpApi.post("http://rentopsdev.crland.com.cn/api/public/app/message/selectSendMessage", params,OkTestBean.class, new IResponseCallback() {
             @Override
             public void onStart() {
 
             }
 
+
             @Override
-            public void onFinish(String response) {
-                resultTv.setText(response);
+            public void onFinish(Object response) {
+                OkTestBean bean = (OkTestBean) response;
+                resultTv.setText(bean.getData().getSysMessageList().get(0).getContent());
             }
 
             @Override

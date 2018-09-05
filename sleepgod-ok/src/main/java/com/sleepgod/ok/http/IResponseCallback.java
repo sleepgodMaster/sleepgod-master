@@ -9,7 +9,7 @@ public interface IResponseCallback {
 
     void onStart();
 
-    void onFinish(String response);
+    void onFinish(Object response);
 
     void onError(Exception e);
 

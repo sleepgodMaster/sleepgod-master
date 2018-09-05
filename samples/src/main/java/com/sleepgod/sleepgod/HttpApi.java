@@ -2,6 +2,7 @@ package com.sleepgod.sleepgod;
 
 import android.content.Context;
 
+import com.google.gson.Gson;
 import com.sleepgod.ok.http.IDownloadCallback;
 import com.sleepgod.ok.http.IResponseCallback;
 import com.sleepgod.ok.http.OkHttpCaller;
@@ -65,31 +66,27 @@ public class HttpApi {
      * 公共参数
      * @return
      */
-    public static JSONObject buildRequestParams() {
-        JSONObject params = new JSONObject();
-        try {
-          //  if (SessionManager.getInstance().isLogin()) {
-                params.put("token", "");
-                params.put("userId", "");
-          //  }
+    public static Map buildRequestParams() {
+        Map<String, Object> params = new HashMap<>();
 
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+//                params.put("token", "");
+
         return params;
     }
 
 
-    public static void post(String url, JSONObject jsonObject, IResponseCallback callback) {
-        okHttpCaller.post(url, getHeaderBuilder().build(), jsonObject.toString(), callback);
+
+    public static void post(String url, Map<String, Object> params,Class<?> clazz, IResponseCallback callback) {
+        String jsonObject = new Gson().toJson(params);
+        okHttpCaller.post(url, getHeaderBuilder().build(), jsonObject,clazz, callback);
     }
 
-    public static void get(String url, Map<String, Object> params, IResponseCallback callback) {
-        okHttpCaller.get(url, getHeaderBuilder().build(), params,callback);
+    public static void get(String url, Map<String, Object> params,Class<?> clazz,  IResponseCallback callback) {
+        okHttpCaller.get(url, getHeaderBuilder().build(), params,clazz,callback);
     }
 
-    public static void uploadFile(String url, List<File> files, HashMap<String, Object> params, IResponseCallback callback) {
-        okHttpCaller.uploadFile(url,files , params,callback);
+    public static void uploadFile(String url, List<File> files, HashMap<String, Object> params,Class<?> clazz,  IResponseCallback callback) {
+        okHttpCaller.uploadFile(url,files , params,clazz,callback);
     }
 
     public static void download(String url, String filePath, HashMap<String, Object> params, IDownloadCallback callback) {

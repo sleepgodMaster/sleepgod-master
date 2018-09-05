@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.text.TextUtils;
 
+import com.google.gson.Gson;
 import com.sleepgod.ok.exception.NetUnavailableException;
 import com.sleepgod.ok.util.AppLog;
 import com.sleepgod.ok.util.NetUtil;
@@ -70,7 +71,7 @@ public class OkHttpCaller<B> extends BaseHttpCaller<Headers, RequestBody> {
     return instance;
   }
 
-  public void get(String url, Map<String, String> headers, Map<String, String> params,
+  public void get(String url, Map<String, String> headers, Map<String, String> params,Class<?> clazz,
                   IResponseCallback callback) {
     AppLog.e("get params = " + params.toString());
     Request request = new Request.Builder().headers(buildHeaders(headers))
@@ -78,12 +79,12 @@ public class OkHttpCaller<B> extends BaseHttpCaller<Headers, RequestBody> {
             .get()
             .build();
 
-    execute(request, callback);
+    execute(request,clazz,callback);
   }
 
 
 
-  public void post(String url, Map<String, String> headers, String json,
+  public void post(String url, Map<String, String> headers, String json,Class<?> clazz,
                    IResponseCallback callback) {
     AppLog.e("json params = " + json);
     MediaType type = MediaType.parse("application/json; charset=utf-8");
@@ -92,11 +93,11 @@ public class OkHttpCaller<B> extends BaseHttpCaller<Headers, RequestBody> {
             .post(RequestBody.create(type, json))
             .build();
 
-    execute(request,callback);
+    execute(request,clazz,callback);
   }
 
 
-  public void uploadFile(String url, List<File> flies, HashMap<String, Object> params,
+  public void uploadFile(String url, List<File> flies, HashMap<String, Object> params,Class<?> clazz,
                          IResponseCallback callback) {
     MultipartBody.Builder builder = new MultipartBody.Builder();
     builder.setType(MultipartBody.FORM);
@@ -126,7 +127,7 @@ public class OkHttpCaller<B> extends BaseHttpCaller<Headers, RequestBody> {
 
     RequestBody requestBody = builder.build();
     Request request = new Request.Builder().url(url).post(requestBody).build();
-    execute(request, callback);
+    execute(request,clazz,callback);
   }
 
 
@@ -160,7 +161,7 @@ public class OkHttpCaller<B> extends BaseHttpCaller<Headers, RequestBody> {
   /**
    * 执行普通网络请求
    */
-  private void execute( Request request, final IResponseCallback callback) {
+  private void execute(Request request, final Class<?> clazz, final IResponseCallback callback) {
     AppLog.e("request = " + request.toString());
 
     if (!NetUtil.isNetAvailable(context)) {
@@ -184,7 +185,14 @@ public class OkHttpCaller<B> extends BaseHttpCaller<Headers, RequestBody> {
         if (TextUtils.isEmpty(responseStr)) {
           postFailure(callback, new NullPointerException());
         } else {
-          postResponse(callback,responseStr);
+          if (clazz == null) {
+            postResponse(callback,responseStr);
+          }else{
+            Gson mGson = new Gson();
+            Object obj = mGson.fromJson(responseStr, clazz);
+            postResponse(callback,obj);
+          }
+
           response.body().close();
         }
       }
@@ -318,7 +326,7 @@ public class OkHttpCaller<B> extends BaseHttpCaller<Headers, RequestBody> {
   /**
    * 到主线程中回调数据返回的方法
    */
-  public void postResponse(final IResponseCallback callback, final String response) {
+  public void postResponse(final IResponseCallback callback, final Object response) {
     if (callback != null) {
       mHandler.post(new Runnable() {
         @Override
