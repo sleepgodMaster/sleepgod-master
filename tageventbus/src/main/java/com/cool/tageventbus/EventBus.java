@@ -235,42 +235,42 @@ public class EventBus {
         for (int i = 0; i < eventTypes.length; i++) {
             Class<?> eventType = eventTypes[i];
             if (eventType == int.class) {
-                eventTypes[i] = Integer.TYPE;
+                eventTypes[i] = Integer.class;
             } else if (eventType == boolean.class) {
-                eventTypes[i] = Boolean.TYPE;
+                eventTypes[i] = Boolean.class;
             } else if (eventType == char.class) {
-                eventTypes[i] = Character.TYPE;
+                eventTypes[i] = Character.class;
             } else if (eventType == byte.class) {
-                eventTypes[i] = Byte.TYPE;
+                eventTypes[i] = Byte.class;
             } else if (eventType == short.class) {
-                eventTypes[i] = Short.TYPE;
+                eventTypes[i] = Short.class;
             } else if (eventType == long.class) {
-                eventTypes[i] = Long.TYPE;
+                eventTypes[i] = Long.class;
             } else if (eventType == float.class) {
-                eventTypes[i] = Float.TYPE;
+                eventTypes[i] = Float.class;
             } else if (eventType == double.class) {
-                eventTypes[i] = Double.TYPE;
+                eventTypes[i] = Double.class;
             }
         }
 
         for (int i = 0; i < eventTypesClass.length; i++) {
             Class<?> eventType = eventTypesClass[i];
             if (eventType == int.class) {
-                eventTypes[i] = Integer.TYPE;
+                eventTypesClass[i] = Integer.class;
             } else if (eventType == boolean.class) {
-                eventTypes[i] = Boolean.TYPE;
+                eventTypesClass[i] = Boolean.class;
             } else if (eventType == char.class) {
-                eventTypes[i] = Character.TYPE;
+                eventTypesClass[i] = Character.class;
             } else if (eventType == byte.class) {
-                eventTypes[i] = Byte.TYPE;
+                eventTypesClass[i] = Byte.class;
             } else if (eventType == short.class) {
-                eventTypes[i] = Short.TYPE;
+                eventTypesClass[i] = Short.class;
             } else if (eventType == long.class) {
-                eventTypes[i] = Long.TYPE;
+                eventTypesClass[i] = Long.class;
             } else if (eventType == float.class) {
-                eventTypes[i] = Float.TYPE;
+                eventTypesClass[i] = Float.class;
             } else if (eventType == double.class) {
-                eventTypes[i] = Double.TYPE;
+                eventTypesClass[i] = Double.class;
             }
         }
 

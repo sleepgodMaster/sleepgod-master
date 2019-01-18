@@ -40,7 +40,7 @@ public class EventSendActivity extends BaseActivity {
                 EventBus.getDefault().postByTag(EventReceiverActivity.TAG_ABC);
                 break;
             case R.id.bt_send_one_args_by_tag:
-                EventBus.getDefault().postByTag(EventReceiverActivity.TAG_ABC,"我是事件");
+                EventBus.getDefault().postByTag(EventReceiverActivity.TAG_ABC,1);
                 break;
             case R.id.bt_sync:
                 new Thread(){

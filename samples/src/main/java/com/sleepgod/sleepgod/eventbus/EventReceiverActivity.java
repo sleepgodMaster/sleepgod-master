@@ -78,7 +78,7 @@ public class EventReceiverActivity extends BaseActivity {
     }
 
     @Subscribe(tag = TAG_ABC)
-    public void onReceiverByTag(String msg) {
+    public void onReceiverByTag(int msg) {
         StringBuffer stringBuffer = new StringBuffer();
         stringBuffer.append("接收到1个参数的事件,指定接收的Tag\n");
         stringBuffer.append("msg=" + msg + "\n");
