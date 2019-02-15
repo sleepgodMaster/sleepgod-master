@@ -8,6 +8,7 @@ ext {
      */
     isPublishAPermission = false
     isPublishTagEventbus = false
+    isPublishTagEventbusCompiler = false
 
     android = [
             compileSdkVersion: 27,
