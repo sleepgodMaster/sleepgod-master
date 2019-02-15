@@ -30,8 +30,8 @@ ext {
             gson = "2.8.0",
             butterknife = "8.5.1",
             aspectj = "1.8.9",
-            auto_service = "1.0-rc2",
-            javapoet = "1.8.0",
+            auto_service = "1.0-rc4",
+            javapoet = "1.11.1",
             leakcanary = "1.5.4"
     ]
 

@@ -8,7 +8,7 @@ public class StickyEvent {
     public Class<?>[] eventTypes;
     public Object[] events;
 
-    public StickyEvent(String tag, Class<?>[] eventTypes,Object[] events) {
+    public StickyEvent(String tag, Class<?>[] eventTypes, Object[] events) {
         this.tag = tag;
         this.eventTypes = eventTypes;
         this.events = events;

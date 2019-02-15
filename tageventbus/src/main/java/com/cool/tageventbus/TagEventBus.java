@@ -4,6 +4,9 @@ import android.os.Handler;
 import android.os.Looper;
 import android.text.TextUtils;
 
+import com.cool.tageventbus.meta.SubscriberInfo;
+import com.cool.tageventbus.meta.SubscriberInfoIndex;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -16,9 +19,9 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class EventBus {
+public class TagEventBus {
 
-    public static EventBus instance;
+    public static TagEventBus instance;
     private final Map<Class<?>, List<SubscriberMethod>> METHOD_CACHE;
     private final Map<Object, CopyOnWriteArrayList<Subscription>> subscriptionsBySubscriber;
     private final CopyOnWriteArrayList<StickyEvent> mStickyEvents;
@@ -26,19 +29,20 @@ public class EventBus {
     private Handler mHandler = new Handler(Looper.getMainLooper());
     private ExecutorService executorService;
     private final static String TAGEMPTY = "";
+    private final static String POSTFIX_BUSINDEX = "_BusIndex";
 
-    private EventBus() {
+    private TagEventBus() {
         METHOD_CACHE = new ConcurrentHashMap<>();
         subscriptionsBySubscriber = new HashMap<>();
         mStickyEvents = new CopyOnWriteArrayList<>();
         executorService = Executors.newCachedThreadPool();
     }
 
-    public static EventBus getDefault() {
+    public static TagEventBus getDefault() {
         if (instance == null) {
-            synchronized (EventBus.class) {
+            synchronized (TagEventBus.class) {
                 if (instance == null) {
-                    instance = new EventBus();
+                    instance = new TagEventBus();
                 }
             }
         }
@@ -67,7 +71,7 @@ public class EventBus {
             subscriptionsBySubscriber.put(subscriber, subscriptions);
         } else {
             if (subscriptions.contains(newSubscription)) {
-                throw new EventBusExection("Subscriber " + subscriber.getClass() + " already registered");
+                throw new EventBusException("Subscriber " + subscriber.getClass() + " already registered");
             }
         }
         subscriptions.add(newSubscription);
@@ -80,6 +84,14 @@ public class EventBus {
             return cacheSubscriberMethods;
         }
 
+        List<SubscriberMethod> subscriberMethods = getSubscriberMethodsUseGenerateJavaFile(subscriberClass);
+        if (subscriberMethods != null) return subscriberMethods;
+
+        subscriberMethods = getSubscriberMethodsUseReflect(subscriberClass);
+        return subscriberMethods;
+    }
+
+    private List<SubscriberMethod> getSubscriberMethodsUseReflect(Class<?> subscriberClass) {
         Method[] methods = subscriberClass.getDeclaredMethods();
         List<SubscriberMethod> subscriberMethods = new ArrayList<>();
         for (Method method : methods) {
@@ -96,6 +108,29 @@ public class EventBus {
         return subscriberMethods;
     }
 
+    private List<SubscriberMethod> getSubscriberMethodsUseGenerateJavaFile(Class<?> subscriberClass) {
+        String subscriberClassName = subscriberClass.getName();
+        try {
+            Class<?> busIndexClass = Class.forName(subscriberClassName + POSTFIX_BUSINDEX);
+            Object instance = busIndexClass.newInstance();
+            SubscriberInfoIndex subscriberInfoIndex = (SubscriberInfoIndex) instance;
+            SubscriberInfo subscriberInfo = subscriberInfoIndex.getSubscriberInfo(subscriberClass);
+            if (subscriberInfo != null) {
+                List<SubscriberMethod> subscriberMethods = subscriberInfo.getSubscriberMethods();
+                if (subscriberMethods != null && subscriberMethods.size() > 0) {
+                    METHOD_CACHE.put(subscriberClass, subscriberMethods);
+                    return subscriberMethods;
+                }
+            }
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     public void post(Object... events) {
         postByTag(TAGEMPTY, events);
@@ -276,7 +311,11 @@ public class EventBus {
 
         for (int i = 0; i < eventTypes.length; i++) {
 
-            boolean isEqules = eventTypes[i] == eventTypesClass[i];
+            Class<?> postEventType = eventTypes[i];
+            Class<?> receiverEventType = eventTypesClass[i];
+
+            boolean isEqules = postEventType == receiverEventType || receiverEventType.isAssignableFrom(postEventType);
+
             if (!isEqules) {
                 return false;
             }

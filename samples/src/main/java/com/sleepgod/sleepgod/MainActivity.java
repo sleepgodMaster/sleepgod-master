@@ -7,7 +7,7 @@ import android.view.View;
 
 import com.cool.butterknife.annoation.OnClick;
 import com.cool.butterknife.core.ButterKnife;
-import com.cool.tageventbus.EventBus;
+import com.cool.tageventbus.TagEventBus;
 import com.sleepgod.sleepgod.activity.OkHttpTestActivity;
 import com.sleepgod.sleepgod.activity.RetrofitTestActivity;
 import com.sleepgod.sleepgod.eventbus.EventReceiverActivity;
@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        EventBus.getDefault().postSticky("我是粘性事件");
+        TagEventBus.getDefault().postSticky("我是粘性事件");
     }
 
     @OnClick({R.id.bt_retrofit, R.id.go_okhttp_bt,R.id.bt_aop,R.id.bt_tageventbus})

@@ -38,4 +38,5 @@ dependencies {
     debugImplementation rootProject.ext.dependencies.leakcanary_android
     releaseImplementation rootProject.ext.dependencies.leakcanary_android_no_op
     implementation project(':tageventbus')
+    annotationProcessor project(':tageventbus_compiler')
 }

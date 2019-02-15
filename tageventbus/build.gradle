@@ -25,8 +25,9 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     testImplementation 'junit:junit:4.12'
+    api project(':tageventbus_annoation')
 }
 //添加
 //发布命令参考https://www.jianshu.com/p/8f6dcd199b65

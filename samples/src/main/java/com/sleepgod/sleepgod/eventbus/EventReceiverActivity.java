@@ -7,8 +7,8 @@ import android.widget.TextView;
 import com.cool.butterknife.annoation.BindView;
 import com.cool.butterknife.annoation.OnClick;
 import com.cool.butterknife.core.ButterKnife;
-import com.cool.tageventbus.EventBus;
 import com.cool.tageventbus.Subscribe;
+import com.cool.tageventbus.TagEventBus;
 import com.cool.tageventbus.ThreadMode;
 import com.sleepgod.net.base.activity.BaseActivity;
 import com.sleepgod.sleepgod.R;
@@ -27,7 +27,7 @@ public class EventReceiverActivity extends BaseActivity {
     @Override
     public void initView() {
         ButterKnife.bind(this);
-        EventBus.getDefault().register(this);
+        TagEventBus.getDefault().register(this);
     }
 
     @Subscribe
@@ -95,7 +95,7 @@ public class EventReceiverActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        EventBus.getDefault().unregister(this);
+        TagEventBus.getDefault().unregister(this);
     }
 
     @OnClick(R.id.bt_send)

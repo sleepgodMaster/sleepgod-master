@@ -4,7 +4,7 @@ import android.view.View;
 
 import com.cool.butterknife.annoation.OnClick;
 import com.cool.butterknife.core.ButterKnife;
-import com.cool.tageventbus.EventBus;
+import com.cool.tageventbus.TagEventBus;
 import com.sleepgod.net.base.activity.BaseActivity;
 import com.sleepgod.sleepgod.R;
 
@@ -25,28 +25,28 @@ public class EventSendActivity extends BaseActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.bt_send_no_args:
-                EventBus.getDefault().post();
+                TagEventBus.getDefault().post();
                 break;
             case R.id.bt_send_one_args:
-                EventBus.getDefault().post("张三");
+                TagEventBus.getDefault().post("张三");
                 break;
             case R.id.bt_send_two_args:
-                EventBus.getDefault().post("张三",18);
+                TagEventBus.getDefault().post("张三",18);
                 break;
             case R.id.bt_send_three_args:
-                EventBus.getDefault().post("张三",20,new Man("李四",22));
+                TagEventBus.getDefault().post("张三",20,new Man("李四",22));
                 break;
             case R.id.bt_send_no_args_by_tag:
-                EventBus.getDefault().postByTag(EventReceiverActivity.TAG_ABC);
+                TagEventBus.getDefault().postByTag(EventReceiverActivity.TAG_ABC);
                 break;
             case R.id.bt_send_one_args_by_tag:
-                EventBus.getDefault().postByTag(EventReceiverActivity.TAG_ABC,1);
+                TagEventBus.getDefault().postByTag(EventReceiverActivity.TAG_ABC,1);
                 break;
             case R.id.bt_sync:
                 new Thread(){
                     @Override
                     public void run() {
-                        EventBus.getDefault().postByTag(EventReceiverActivity.TAG_MAIN);
+                        TagEventBus.getDefault().postByTag(EventReceiverActivity.TAG_MAIN);
                     }
                 }.start();
                 break;

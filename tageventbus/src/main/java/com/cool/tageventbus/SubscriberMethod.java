@@ -8,7 +8,7 @@ public class SubscriberMethod {
     public Class<?>[] eventTypes;
     public ThreadMode threadMode;
 
-    public SubscriberMethod(Method method, String tag, Class<?>[] eventTypes,ThreadMode threadMode) {
+    public SubscriberMethod(Method method, String tag, Class<?>[] eventTypes, ThreadMode threadMode) {
         this.method = method;
         this.tag = tag;
         this.eventTypes = eventTypes;
