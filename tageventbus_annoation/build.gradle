@@ -1,8 +1,24 @@
 apply plugin: 'java-library'
-
+if (rootProject.isPublishTagEventbusAnnoation) {
+    apply plugin: 'com.novoda.bintray-release'//发布到jcenter
+}
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 }
 
 sourceCompatibility = "7"
 targetCompatibility = "7"
+
+//添加
+//发布命令参考https://www.jianshu.com/p/8f6dcd199b65
+if (rootProject.isPublishTagEventbusAnnoation) {
+    publish {
+        userOrg = 'coollkkz'//bintray.com用户名
+        groupId = 'com.cool'//jcenter上的路径
+        artifactId = 'tageventbus-annoation'//项目名称
+        publishVersion = '2.0.1'//版本号
+        desc = 'a easy lib for send and receiver event'//描述，不重要
+        website = 'https://github.com/sleepgodMaster/sleepgod-master/tree/master/tageventbus'
+        //网站，不重要,如果有自己的网站就放上去吧
+    }
+}

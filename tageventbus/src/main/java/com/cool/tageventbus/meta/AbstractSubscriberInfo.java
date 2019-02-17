@@ -6,6 +6,7 @@ import com.cool.tageventbus.ThreadMode;
 
 import java.lang.reflect.Method;
 
+@SuppressWarnings("unchecked")
 public abstract class AbstractSubscriberInfo implements SubscriberInfo {
     private final Class subscriberClass;
 

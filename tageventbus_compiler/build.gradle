@@ -8,7 +8,13 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation rootProject.ext.dependencies.auto_service
     implementation rootProject.ext.dependencies.javapoet
-    implementation project(':tageventbus_annoation')
+
+//    if(rootProject.isPublishTagEventbusCompiler){
+//        api 'com.cool:tageventbus-annoation:2.0.1'
+//    }else {
+//        api project(':tageventbus_annoation')
+//    }
+    api 'com.cool:tageventbus-annoation:2.0.1'
 }
 
 sourceCompatibility = "7"

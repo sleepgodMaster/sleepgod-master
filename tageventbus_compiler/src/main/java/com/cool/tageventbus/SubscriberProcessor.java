@@ -30,6 +30,7 @@ import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.Modifier;
+import javax.lang.model.element.NestingKind;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.VariableElement;
 import javax.lang.model.util.Elements;
@@ -86,7 +87,18 @@ public class SubscriberProcessor extends AbstractProcessor {
 
         String packageName = mElementUtils.getPackageOf(classTypeElement).getQualifiedName().toString();
         String classSimpleName = classTypeElement.getSimpleName().toString();
-        String newClassSimpleName = classSimpleName+Constant.BUSINDEX;
+        String newClassSimpleName;
+
+        NestingKind nestingKind = classTypeElement.getNestingKind();
+        boolean nested = nestingKind.isNested();
+        if (nested) {//如果是内部类，需要单独处理
+            String fullPackageName = classTypeElement.asType().toString();
+            String innerClassName = fullPackageName.replace(packageName, "")
+                    .substring(1).replace(".", "$");
+            newClassSimpleName = innerClassName + Constant.BUSINDEX;
+        } else {
+            newClassSimpleName = classSimpleName + Constant.BUSINDEX;
+        }
 
         TypeSpec busIndex = TypeSpec.classBuilder(newClassSimpleName)
                 .addModifiers(Modifier.PUBLIC)
@@ -94,7 +106,7 @@ public class SubscriberProcessor extends AbstractProcessor {
                 .addMethod(generateGetSubscriberInfoMethod())
                 .addMethod(generatePutIndex())
                 .addField(generateSubscriberIndexField())
-                .addStaticBlock(generateStaticBlock(classTypeElement,subscriberInfoModels))
+                .addStaticBlock(generateStaticBlock(classTypeElement, subscriberInfoModels))
                 .build();
 
         JavaFile javaFile = JavaFile.builder(packageName, busIndex)

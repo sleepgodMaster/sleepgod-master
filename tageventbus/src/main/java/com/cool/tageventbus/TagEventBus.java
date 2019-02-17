@@ -53,9 +53,24 @@ public class TagEventBus {
         if (subscriber == null) {
             return;
         }
-        List<SubscriberMethod> subscriberMethods = findSubscriberMethods(subscriber.getClass());
-        for (SubscriberMethod subscriberMethod : subscriberMethods) {
-            subscribe(subscriber, subscriberMethod);
+        Class<?> subscriberClass = subscriber.getClass();
+        String subscriberClassName;
+        while (true) {
+
+            List<SubscriberMethod> subscriberMethods = findSubscriberMethods(subscriberClass);
+
+            synchronized (this) {
+                for (SubscriberMethod subscriberMethod : subscriberMethods) {
+                    subscribe(subscriber, subscriberMethod);
+                }
+            }
+
+            subscriberClass = subscriberClass.getSuperclass();
+            subscriberClassName = subscriberClass.getName();
+
+            if(subscriberClassName.startsWith("android.") || subscriberClassName.startsWith("java.lang")){
+                break;
+            }
         }
 
         if (mStickyEvents.size() > 0) {
@@ -72,6 +87,12 @@ public class TagEventBus {
         } else {
             if (subscriptions.contains(newSubscription)) {
                 throw new EventBusException("Subscriber " + subscriber.getClass() + " already registered");
+            }
+
+            for (Subscription subscription : subscriptions) {
+                if(subscription.subscriberMethod == subscriberMethod){
+                    throw new EventBusException("Subscriber " + subscriber.getClass() + " already registered");
+                }
             }
         }
         subscriptions.add(newSubscription);
