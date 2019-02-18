@@ -68,7 +68,8 @@ public class TagEventBus {
             subscriberClass = subscriberClass.getSuperclass();
             subscriberClassName = subscriberClass.getName();
 
-            if(subscriberClassName.startsWith("android.") || subscriberClassName.startsWith("java.lang")){
+            if(subscriberClassName.startsWith("android.") || subscriberClassName.startsWith("java.")
+                    || subscriberClassName.startsWith("androidx.")){
                 break;
             }
         }
