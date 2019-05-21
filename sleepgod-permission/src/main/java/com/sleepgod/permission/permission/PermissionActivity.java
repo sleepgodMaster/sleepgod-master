@@ -49,6 +49,10 @@ public class PermissionActivity extends Activity {
         Intent intent = getIntent();
         String[] permissions = intent.getStringArrayExtra(PERMISSIONS);
         showRationaleDialog = intent.getBooleanExtra("SHOWRATIONALEDIALOG", true);
+        if(onPermissionCallback == null){
+            finish();
+            return;
+        }
         checkPermissions(permissions);
     }
 
@@ -198,7 +202,7 @@ public class PermissionActivity extends Activity {
 
     @Override
     public void finish() {
-        if(customerDialog != null){
+        if(customerDialog != null && customerDialog.isShowing()){
             customerDialog.dismiss();
         }
         onPermissionCallback = null;

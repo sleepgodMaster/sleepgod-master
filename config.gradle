@@ -6,7 +6,7 @@ ext {
     /**
      * 要发布那个库到jcenter就将那个库置为true
      */
-    isPublishAPermission = false
+    isPublishAPermission = true
     isPublishTagEventbus = false
     isPublishTagEventbusCompiler = false
     isPublishTagEventbusAnnoation = false
