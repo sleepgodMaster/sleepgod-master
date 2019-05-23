@@ -61,12 +61,12 @@ public class PermissionActivity extends Activity {
 
     private void checkPermissions(String[] permissions) {
         PermissionResult permissionResult = PermissionUtils.checkPermissions(this, permissions);
-        if (permissionResult.hasPermission) {
+        if (permissionResult.isHasPermission()) {
             onPermissionCallback.onGranted();
             finish();
             return;
         }
-        List<String> deniedList = permissionResult.deniedList;
+        List<String> deniedList = permissionResult.getDeniedList();
         ActivityCompat.requestPermissions(this, deniedList.toArray(new String[deniedList.size()]), REQUEST_CODE);
     }
 

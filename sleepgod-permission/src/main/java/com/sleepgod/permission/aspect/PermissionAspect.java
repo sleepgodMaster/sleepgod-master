@@ -55,7 +55,7 @@ public class PermissionAspect implements PermissionActivity.OnPermissionCallback
 
         PermissionResult permissionResult = PermissionUtils.checkPermissions(context, permissions);
         //如果有权限，则直接调用
-        if (permissionResult.hasPermission) {
+        if (permissionResult.isHasPermission()) {
             onGranted();
             return;
         }

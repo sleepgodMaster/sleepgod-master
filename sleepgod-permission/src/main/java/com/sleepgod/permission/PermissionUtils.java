@@ -16,7 +16,7 @@ import java.util.List;
 
 /**
  * Created by cool on 2018/6/25.
- * /**
+ *
  * 获取全局的context，也就是Application Context
  */
 
@@ -54,6 +54,12 @@ public class PermissionUtils {
         }
     }
 
+    /**
+     * 检查是否有权限
+     * @param context context
+     * @param permissions permissions
+     * @return PermissionResult
+     */
     public static PermissionResult checkPermissions(Context context, String[] permissions) {
         checkPermissionsInManifest(context, permissions);
         PermissionResult permissionResult = new PermissionResult();
@@ -67,15 +73,20 @@ public class PermissionUtils {
                 deniedList.add(permission);
             }
         }
-        permissionResult.grantedList = grantedList;
-        permissionResult.deniedList = deniedList;
+        permissionResult.setGrantedList(grantedList);
+        permissionResult.setDeniedList(deniedList);
 
         if (grantedList.size() == permissions.length) {
-            permissionResult.hasPermission = true;
+            permissionResult.setHasPermission(true);
         }
         return permissionResult;
     }
 
+    /**
+     * 检查权限是否在Manifest中声明
+     * @param context context
+     * @param permissions permissions
+     */
     private static void checkPermissionsInManifest(Context context, String[] permissions) {
         List<String> manifestPermissions = PermissionUtils.getManifestPermissions(context);
         for (String p : permissions) {
