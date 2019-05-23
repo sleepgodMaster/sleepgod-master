@@ -4,18 +4,20 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
 
 import com.sleepgod.permission.CustomerDialog;
 import com.sleepgod.permission.R;
 import com.sleepgod.permission.RuntimeSettingPage;
-import com.sleepgod.permission.Utils;
+import com.sleepgod.permission.PermissionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +34,7 @@ public class PermissionActivity extends Activity {
     private boolean showRationaleDialog;
     private List<String> mDeniedList;
     private CustomerDialog customerDialog;
+    private int DIALOG_MARGIN = 90;
 
     public static void requestPermission(Context context, String[] permissions, boolean showRationaleDialog, OnPermissionCallback callback) {
         Intent intent = new Intent(context, PermissionActivity.class);
@@ -49,7 +52,7 @@ public class PermissionActivity extends Activity {
         Intent intent = getIntent();
         String[] permissions = intent.getStringArrayExtra(PERMISSIONS);
         showRationaleDialog = intent.getBooleanExtra("SHOWRATIONALEDIALOG", true);
-        if(onPermissionCallback == null){
+        if (onPermissionCallback == null) {
             finish();
             return;
         }
@@ -57,34 +60,14 @@ public class PermissionActivity extends Activity {
     }
 
     private void checkPermissions(String[] permissions) {
-        checkPermissionsInManifest(permissions);
-        List<String> grantedList = new ArrayList<>();
-        List<String> deniedList = new ArrayList<>();
-
-        for (String permission : permissions) {
-            if (ActivityCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED) {
-                grantedList.add(permission);
-            } else {
-                deniedList.add(permission);
-            }
-        }
-
-        if (grantedList.size() == permissions.length) {
+        PermissionResult permissionResult = PermissionUtils.checkPermissions(this, permissions);
+        if (permissionResult.hasPermission) {
             onPermissionCallback.onGranted();
             finish();
             return;
         }
-
+        List<String> deniedList = permissionResult.deniedList;
         ActivityCompat.requestPermissions(this, deniedList.toArray(new String[deniedList.size()]), REQUEST_CODE);
-    }
-
-    private void checkPermissionsInManifest(String[] permissions) {
-        List<String> manifestPermissions = Utils.getManifestPermissions(this);
-        for (String p : permissions) {
-            if (!manifestPermissions.contains(p)) {
-                throw new IllegalStateException(String.format("The permission %1$s is not registered in manifest.xml", p));
-            }
-        }
     }
 
     @Override
@@ -135,9 +118,12 @@ public class PermissionActivity extends Activity {
     }
 
     private void showSettingDialog(final List<String> rationaleList) {
-        if(customerDialog == null) {
-            customerDialog = new CustomerDialog(this);
-            customerDialog.contentView(R.layout.dialog_setting)
+        if (customerDialog == null) {
+            customerDialog = new CustomerDialog(this)
+                    .contentView(R.layout.dialog_setting)
+                    .gravity(Gravity.CENTER)
+                    .customerMargin(DIALOG_MARGIN)
+                    .cancelable(false)
                     .listeners(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -153,7 +139,7 @@ public class PermissionActivity extends Activity {
                     }, R.id.tv_cancel, R.id.tv_setting);
             TextView textView = customerDialog.findViewById(R.id.tv_message);
             List<String> permissionNames = PermissionTransform.transformText(rationaleList);
-            textView.setText(TextUtils.join("\n",permissionNames));
+            textView.setText(TextUtils.join("\n", permissionNames));
         }
         customerDialog.show();
     }
@@ -166,7 +152,7 @@ public class PermissionActivity extends Activity {
                 List<String> rationaleList = getRationaleList(deniedList);
                 if (rationaleList.size() > 0) {
                     onPermissionCallback.onRationale(rationaleList);
-                }else {
+                } else {
                     onPermissionCallback.onDenied(deniedList);
                 }
             } else {//有权限了
@@ -202,7 +188,7 @@ public class PermissionActivity extends Activity {
 
     @Override
     public void finish() {
-        if(customerDialog != null && customerDialog.isShowing()){
+        if (customerDialog != null && customerDialog.isShowing()) {
             customerDialog.dismiss();
         }
         onPermissionCallback = null;

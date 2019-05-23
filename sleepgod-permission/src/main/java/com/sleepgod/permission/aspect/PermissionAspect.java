@@ -5,12 +5,13 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.widget.Toast;
 
-import com.sleepgod.permission.Utils;
+import com.sleepgod.permission.PermissionUtils;
 import com.sleepgod.permission.annotation.APermission;
 import com.sleepgod.permission.annotation.APermissionDenied;
 import com.sleepgod.permission.annotation.APermissionRationale;
 import com.sleepgod.permission.permission.Permission;
 import com.sleepgod.permission.permission.PermissionActivity;
+import com.sleepgod.permission.permission.PermissionResult;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -46,9 +47,16 @@ public class PermissionAspect implements PermissionActivity.OnPermissionCallback
         } else if (target instanceof android.support.v4.app.Fragment) {
             context = ((android.support.v4.app.Fragment) target).getActivity().getApplicationContext();
         } else {
-            context = Utils.getContext();
+            context = PermissionUtils.getContext();
         }
         if (context == null) {
+            return;
+        }
+
+        PermissionResult permissionResult = PermissionUtils.checkPermissions(context, permissions);
+        //如果有权限，则直接调用
+        if (permissionResult.hasPermission) {
+            onGranted();
             return;
         }
 
@@ -67,19 +75,19 @@ public class PermissionAspect implements PermissionActivity.OnPermissionCallback
 
     @Override
     public void onRationale(List<String> roationaleList) {
-            Method permissionRationaleMethod = getPermissionRationaleMethod(joinPoint.getTarget());
-            invoke(joinPoint.getTarget(), permissionRationaleMethod, roationaleList, aPermission.requestCode());
+        Method permissionRationaleMethod = getPermissionRationaleMethod(joinPoint.getTarget());
+        invoke(joinPoint.getTarget(), permissionRationaleMethod, roationaleList, aPermission.requestCode());
         joinPoint = null;
     }
 
     @Override
     public void onDenied(List<String> deniedList) {
-            Method permissionDeniedMethod = getPermissionDeniedMethod(joinPoint.getTarget());
-            if (permissionDeniedMethod == null && !TextUtils.isEmpty(aPermission.deniedMessage())) {
-                Toast.makeText(context, aPermission.deniedMessage(), Toast.LENGTH_SHORT).show();
-            } else {
-                invoke(joinPoint.getTarget(), permissionDeniedMethod, deniedList, aPermission.requestCode());
-            }
+        Method permissionDeniedMethod = getPermissionDeniedMethod(joinPoint.getTarget());
+        if (permissionDeniedMethod == null && !TextUtils.isEmpty(aPermission.deniedMessage())) {
+            Toast.makeText(context, aPermission.deniedMessage(), Toast.LENGTH_SHORT).show();
+        } else {
+            invoke(joinPoint.getTarget(), permissionDeniedMethod, deniedList, aPermission.requestCode());
+        }
         joinPoint = null;
     }
 
